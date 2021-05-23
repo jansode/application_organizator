@@ -1,0 +1,164 @@
+import React, { useState, useEffect, useRef } from 'react'
+import applicationService from '../services/application'
+import Utils from './Utils'
+
+import Calendar from 'react-calendar'
+
+import '../styles/index.css'
+import 'react-calendar/dist/Calendar.css';
+import 'quill/dist/quill.snow.css'
+
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
+import Delta from 'quill-delta'
+
+import {
+    Redirect
+} from 'react-router-dom'
+
+const NewApplication = ({setCreateNewVisible, setApplications}) => {
+
+    const quillRef = useRef(null) 
+    const calendarWrapperRef = useRef(null)
+
+    const [formTitle, setFormTitle] = useState('')
+    const [formUrl, setFormUrl] = useState('')
+    const [formStatus, setFormStatus] = useState('edit')
+    const [formDate, setFormDate] = useState()
+    const [formLocation, setFormLocation] = useState('')
+    const [formCoverLetter, setFormCoverLetter] = useState(new Delta())
+
+    const [calendarVisible, setCalendarVisible] = useState(false)
+    const [coverLetterVisible, setCoverLetterVisible] = useState(false)
+    const [createNewFlag, setCreateNewFlag] = useState(false)
+
+    useEffect( async () => {
+
+        document.onclick = (e) => {
+            if(e.target.id != "calendar" && calendarWrapperRef.current && !calendarWrapperRef.current.contains(e.target))
+            {
+                setCalendarVisible(false)        
+            }
+        }
+
+        if(createNewFlag)
+        {
+            createNew()
+            setCreateNewFlag(false)
+        }
+
+    }, [createNewFlag, calendarWrapperRef])
+
+    const createNewButtonHandler = async () => {
+        
+        let missingFields = false
+        if(formTitle === "")
+        {
+            document.getElementById('title').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+        if(formUrl === "")
+        {
+            document.getElementById('url').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+        if(formLocation === "")
+        {
+            document.getElementById('location').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+
+        if(missingFields)
+        {
+            return
+        }
+
+
+
+        if(quillRef.current != null)
+        {
+            await quillRef.current.blur()
+        }
+        setCreateNewFlag(true)
+    }
+
+    const createNew = async (e) => {
+        await applicationService.createUserApplication({
+            title: formTitle,
+            url: formUrl,
+            location: formLocation,
+            status: formStatus,
+            end_date: formDate,
+            cover_letter: formCoverLetter
+        })
+
+        const applications = await applicationService.getUserApplications()
+        setApplications(applications)
+
+        setCreateNewVisible(false)
+    }
+
+      const modules = {
+        toolbar: [
+          [{ 'header': [1, 2, false] }],
+          ['bold', 'italic', 'underline','strike', 'blockquote'],
+          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+          ['link'],
+          ['clean']
+        ],
+      }
+
+      const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link' 
+      ]
+
+
+
+    let calendarDiv = <div></div>
+    if(calendarVisible)
+    {
+        calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(v); setCalendarVisible(false)}} /></div>
+    }
+
+    let coverLetterDiv = <div></div>
+    if(coverLetterVisible)
+    {
+        coverLetterDiv = <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/>
+
+    }
+
+    return (
+        <div class="flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2"> 
+            <div class="absolute top-2 right-3 z-10">
+                <a href="" onClick={(e) => {e.preventDefault(); setCreateNewVisible(false)}}>x</a>
+            </div>
+
+            <div class="flex flex-col justify-center items-start pr-5 w-10/12">
+
+                <div class="text-lg">Title:</div> <input id="title" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border = ''; setFormTitle(e.target.value)}}/>
+
+                <div class="text-lg">Url:</div> <input id="url" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border = ''; setFormUrl(e.target.value)}}/>
+
+                <div class="text-lg">Location:</div> <input id="location" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border =''; setFormLocation(e.target.value)}}/>
+
+                <div class="text-lg">End date:</div><input class="border-2 w-full" id="calendar" type="text" value={Utils.getDateFormat(formDate)} onFocus={() => {setCalendarVisible(true)}} onChange={(e) => setFormDate(e.target.value)} />
+
+                {calendarDiv}
+                
+                <div class="text-lg"><a href="" class="text-lg text-blue-400 " onClick={(e) => {e.preventDefault(); setCoverLetterVisible(!coverLetterVisible)}}>Cover letter</a></div>
+
+                {coverLetterDiv}
+            </div>
+            <div class="flex flex-row justify-center pt-6 w-full">
+                <br/>
+                <button class="bg-blue-600 text-base text-white mt-6 p-2 rounded w-40" onClick={createNewButtonHandler}>Create</button>
+            </div>
+        </div>
+
+    )
+}
+
+export default NewApplication
