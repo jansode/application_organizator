@@ -23,7 +23,6 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
     const [formTitle, setFormTitle] = useState('')
     const [formUrl, setFormUrl] = useState('')
-    const [formStatus, setFormStatus] = useState('edit')
     const [formDate, setFormDate] = useState(new Date(Date.now()))
     const [formLocation, setFormLocation] = useState('')
     const [formCoverLetter, setFormCoverLetter] = useState(new Delta())
@@ -85,7 +84,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
             title: formTitle,
             url: formUrl,
             location: formLocation,
-            status: formStatus,
+            status: 'edit',
             end_date: formDate,
             cover_letter: formCoverLetter
         })

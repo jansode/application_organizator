@@ -1,6 +1,12 @@
 import axios from 'axios'
 
-const baseUrl = '/api'
+let host = ''
+if(process.env.NODE_ENV == 'development')
+{
+    host = 'http://localhost:3001'
+}
+
+const baseUrl = host + '/api'
 
 const login = async (user,pass) => {
 
@@ -41,8 +47,23 @@ const getUserApplication = async (applicationId) => {
         headers : { 'Authorization' : `Bearer ${token}` , 'Content-Type' : 'application/json'}
     }
 
-
     const response = await axios.get(baseUrl+`/applications/${applicationId}`, config)
+    return response.data
+}
+
+const updateUserApplication = async (applicationId, data) => {
+
+    const token = localStorage.getItem('token')
+    if(token === null)
+    {
+        return null 
+    }
+
+    const config = {
+        headers : { 'Authorization' : `Bearer ${token}` , 'Content-Type' : 'application/json'}
+    }
+
+    const response = await axios.put(baseUrl+`/applications/${applicationId}`, data, config)
     return response.data
 }
 
@@ -133,4 +154,4 @@ const deleteUserAppartment = async (appartmentId) => {
     return response.data
 }
 
-export default { login, getUserApplications, getUserApplication, getUserAppartment, getUserAppartments, deleteUserApplication, deleteUserAppartment, createUserApplication }
+export default { login, getUserApplications, getUserApplication, updateUserApplication, getUserAppartment, getUserAppartments, deleteUserApplication, deleteUserAppartment, createUserApplication }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Utils from './Utils'
 
 import { saveAs } from 'file-saver'
@@ -12,6 +12,8 @@ import QuillToPdf from 'quill-to-pdf'
 import sentImage from '../images/mail-sent.jpg'
 import editImage from '../images/mail-edited.jpg'
 
+import applicationService from '../services/application'
+
 import {
     Link
 } from 'react-router-dom'
@@ -21,7 +23,16 @@ const ListCard = ({application, index, deleteApplication}) => {
     const MAX_URL_SIZE = 60
     const DEFAULT_PDF_NAME = 'cover-letter.pdf'
 
-    const [statusImage, setStatusImage] = useState('edit')
+    const [statusImage, setStatusImage] = useState(application.status)
+
+    useEffect( async () => {
+        updateSentStatus(application.id) 
+    }, [statusImage])
+
+    const updateSentStatus = async (applicationId) => {
+        const data = {'status': statusImage }
+        await applicationService.updateUserApplication(applicationId,data)
+    }
 
     const delta = new Delta(application.cover_letter)
 

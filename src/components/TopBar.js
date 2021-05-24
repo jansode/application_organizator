@@ -45,12 +45,10 @@ const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisibl
                 <div class="hamburger-menu-bar2"></div>
                 <div class="hamburger-menu-bar3"></div>
             </div>
-            {/*<button class="" onClick={() => {setMenuOpen(!menuOpen)}}></button>*/}
-
                 <CheeseburgerMenu isOpen={menuOpen} closeCallback={() => {setMenuOpen(false)}}>
                     <div class="flex flex-col items-center h-full p-5">
                         <ReactRoundedImage imageWidth="100" imageHeight="100" image={orava}/>
-                        <p class="text-lg">{username}</p>
+                        <p class="text-2xl">{username}</p>
                         <button onClick={logout}>Log out</button>
                     </div>
                 </CheeseburgerMenu>

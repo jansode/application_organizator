@@ -1,6 +1,12 @@
 import axios from 'axios'
 
-const baseUrl = '/api'
+let host = ''
+if(process.env.NODE_ENV == 'development')
+{
+    host = 'http://localhost:3001'
+}
+
+const baseUrl = host + '/api'
 
 const getUser = async () => {
 
