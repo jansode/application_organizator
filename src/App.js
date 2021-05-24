@@ -43,13 +43,13 @@ const App = () => {
             <Router>
                 <TopBar loggedIn={checkLogin()} setSearchValue={setSearchValue} setSortBy={setSortBy} logout={logout} setCreateNewVisible={setCreateNewVisible}/>
                 <Switch>
-                    <Route path="/login">
+                    <Route exact path="/">
                         <Login setToken = { setToken } />
                     </Route>
-                    <Route path="/signup">
+                    <Route exact path="/signup">
                         <SignUp />
                     </Route>
-                    <AuthRoute path="/dashboard">
+                    <AuthRoute exact path="/dashboard">
                         <Dashboard searchValue={searchValue} sortBy={sortBy} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible}/>
                     </AuthRoute>
                     <AuthRoute path="/application/:id">

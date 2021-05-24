@@ -42,9 +42,12 @@ const Applications = ({searchValue, sortBy}) => {
         })
     }
 
-    filteredList.sort((a,b) => {
-        return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
-    })
+    if(filteredList.length == 0)
+    {
+        filteredList.sort((a,b) => {
+            return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
+            })
+    }
 
     return (
         <div>
@@ -59,9 +62,11 @@ const Applications = ({searchValue, sortBy}) => {
         }
 
         {
-            filteredList.map((application,index) => (
+            filteredList.length === 0 ? filteredList.map((application,index) => ( 
                 <ListCard application={application} index={index} deleteApplication={deleteApplication}/>
             ))
+            :
+            <div></div>
         }
         <a class="text-gray-400 pt-10" href="https://www.vecteezy.com/free-vector/envelope-icon">Envelope Icon Vectors by Vecteezy</a>
         </div>
