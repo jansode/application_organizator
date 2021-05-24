@@ -59,7 +59,7 @@ const ListCard = ({application, index, deleteApplication}) => {
                 <div class="text-lg text-blue-600"><Link to={"/application/"+application.id}>{application.title}</Link></div>
                 <a href={getUrlFormat()}  class="text-base text-blue-400">{application.url.substring(0,MAX_URL_SIZE)}</a>
                 <p class="text-base">{application.location}</p>
-                <p class="text-base">{Utils.getDateFormat(application.end_date)}</p>
+                <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(application.end_date)))}</p>
 
                 {
                     delta.length() != 0 ?

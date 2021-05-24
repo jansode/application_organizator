@@ -35,7 +35,7 @@ const App = () => {
         e.preventDefault()
         localStorage.removeItem('token')
 
-        window.location.reload()
+        window.location.href = '/'
     }
 
     return (

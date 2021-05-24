@@ -24,7 +24,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
     const [formTitle, setFormTitle] = useState('')
     const [formUrl, setFormUrl] = useState('')
     const [formStatus, setFormStatus] = useState('edit')
-    const [formDate, setFormDate] = useState()
+    const [formDate, setFormDate] = useState(new Date(Date.now()))
     const [formLocation, setFormLocation] = useState('')
     const [formCoverLetter, setFormCoverLetter] = useState(new Delta())
 
@@ -73,8 +73,6 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
             return
         }
 
-
-
         if(quillRef.current != null)
         {
             await quillRef.current.blur()
@@ -120,7 +118,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
     let calendarDiv = <div></div>
     if(calendarVisible)
     {
-        calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(v); setCalendarVisible(false)}} /></div>
+        calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
     }
 
     let coverLetterDiv = <div></div>
@@ -144,7 +142,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
                 <div class="text-lg">Location:</div> <input id="location" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border =''; setFormLocation(e.target.value)}}/>
 
-                <div class="text-lg">End date:</div><input class="border-2 w-full" id="calendar" type="text" value={Utils.getDateFormat(formDate)} onFocus={() => {setCalendarVisible(true)}} onChange={(e) => setFormDate(e.target.value)} />
+                <div class="text-lg">End date:</div><input class="border-2 w-full" id="calendar" type="text" value={Utils.getDateFormat(formDate)} onFocus={() => {setCalendarVisible(true)}} />
 
                 {calendarDiv}
                 

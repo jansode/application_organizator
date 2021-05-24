@@ -42,7 +42,7 @@ const Applications = ({searchValue, sortBy}) => {
         })
     }
 
-    if(filteredList.length == 0)
+    if(filteredList.length != 0)
     {
         filteredList.sort((a,b) => {
             return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
@@ -62,7 +62,7 @@ const Applications = ({searchValue, sortBy}) => {
         }
 
         {
-            filteredList.length === 0 ? filteredList.map((application,index) => ( 
+            filteredList.length != 0 ? filteredList.map((application,index) => ( 
                 <ListCard application={application} index={index} deleteApplication={deleteApplication}/>
             ))
             :
