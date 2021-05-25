@@ -23,14 +23,8 @@ import {
 
 const ListCard = ({application, deleteApplication, updateApplication}) => {
 
-    console.log("List card: ")
-    console.log(application)
-
     const MAX_URL_SIZE = 60
     const DEFAULT_PDF_NAME = 'cover-letter.pdf'
-
-    console.log("Application status:")
-    console.log(application.status)
 
     const quillRef = useRef(null) 
     const calendarWrapperRef = useRef(null)
@@ -56,9 +50,6 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
         }
 
     }, [calendarWrapperRef])
-
-    console.log("Application status image:")
-    console.log(statusImage)
 
     const updateSentStatus = async (status) => {
         const data = {'status': status}

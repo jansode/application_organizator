@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import applicationService from '../services/application'
 import Utils from './Utils'
 import ListCard from './ListCard'
@@ -17,13 +17,15 @@ import {
 
 const Applications = ({searchValue, sortBy}) => {
 
+    const didMountRef = useRef(false)
+
     const [applications, setApplications] = useState([])
     const [createNewVisible, setCreateNewVisible] = useState(false)
     
     useEffect( async () => {
         const apps = await applicationService.getUserApplications()
         setApplicationsWrapper(apps)
-    }, [])
+    }, [searchValue, sortBy]);
 
     const setApplicationsWrapper = (apps) => {
         sortApplications(apps)
