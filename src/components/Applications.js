@@ -20,7 +20,6 @@ const Applications = ({searchValue, sortBy}) => {
     const [applications, setApplications] = useState([])
     const [createNewVisible, setCreateNewVisible] = useState(false)
     
-
     useEffect( async () => {
         const applications = await applicationService.getUserApplications()
         setApplications(applications)
@@ -47,6 +46,7 @@ const Applications = ({searchValue, sortBy}) => {
         filteredList.sort((a,b) => {
             return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
             })
+
     }
 
     return (

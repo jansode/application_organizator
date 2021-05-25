@@ -123,7 +123,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
     let coverLetterDiv = <div></div>
     if(coverLetterVisible)
     {
-        coverLetterDiv = <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/>
+        coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
 
     }
 
@@ -148,10 +148,10 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
                 <div class="text-lg"><a href="" class="text-lg text-blue-400 " onClick={(e) => {e.preventDefault(); setCoverLetterVisible(!coverLetterVisible)}}>Cover letter</a></div>
 
                 {coverLetterDiv}
-            </div>
-            <div class="flex flex-row justify-center pt-6 w-full">
-                <br/>
-                <button class="bg-blue-600 text-base text-white mt-6 p-2 rounded w-40" onClick={createNewButtonHandler}>Create</button>
+
+                <div class="flex flex-row justify-center pt-6 w-full">
+                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={createNewButtonHandler}>Create</button>
+                </div>
             </div>
         </div>
 

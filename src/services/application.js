@@ -100,6 +100,9 @@ const createUserApplication = async (application) => {
         user: token.user 
     }
 
+    console.log('createUserApplication: ')
+    console.log(data)
+
     const response = await axios.post(baseUrl+'/applications/', data, config)
     return response.data
 }

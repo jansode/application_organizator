@@ -23,15 +23,23 @@ const ListCard = ({application, index, deleteApplication}) => {
     const MAX_URL_SIZE = 60
     const DEFAULT_PDF_NAME = 'cover-letter.pdf'
 
-    const [statusImage, setStatusImage] = useState(application.status)
+    console.log("Application status:")
+    console.log(application.status)
+
+    const [statusImage, setStatusImage] = useState('edit')
 
     useEffect( async () => {
-        updateSentStatus(application.id) 
-    }, [statusImage])
+        setStatusImage(application.status)
+    }, [])
 
-    const updateSentStatus = async (applicationId) => {
-        const data = {'status': statusImage }
-        await applicationService.updateUserApplication(applicationId,data)
+    console.log("Application status image:")
+    console.log(statusImage)
+
+    const updateSentStatus = async (status) => {
+        const data = {'status': status}
+        await applicationService.updateUserApplication(application.id,data)
+
+        setStatusImage(status)
     }
 
     const delta = new Delta(application.cover_letter)
@@ -52,6 +60,9 @@ const ListCard = ({application, index, deleteApplication}) => {
         return formatted
     }
 
+    console.log('status image:')
+    console.log(statusImage)
+
     return (
         <div class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2" key={index}> 
 
@@ -62,7 +73,7 @@ const ListCard = ({application, index, deleteApplication}) => {
 
             {/* Edit/Sent icon X */}
             <div class="row-span-1 col-span-1 flex flex-row items-center">
-                <a href="" onClick={(e) => {e.preventDefault()}}><img src={statusImage === 'edit' ? editImage : sentImage} onClick={() => {setStatusImage(statusImage === 'edit' ? 'sent' : 'edit')}}width="150" height="150"></img></a>
+                <a href="" onClick={(e) => {e.preventDefault()}}><img src={statusImage === 'edit' ? editImage : sentImage} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}}width="150" height="150"></img></a>
             </div>
 
             {/* Info area */}
