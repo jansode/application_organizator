@@ -21,32 +21,48 @@ const Applications = ({searchValue, sortBy}) => {
     const [createNewVisible, setCreateNewVisible] = useState(false)
     
     useEffect( async () => {
-        const applications = await applicationService.getUserApplications()
-        setApplications(applications)
+        const apps = await applicationService.getUserApplications()
+        setApplicationsWrapper(apps)
     }, [])
 
+    const setApplicationsWrapper = (apps) => {
+        sortApplications(apps)
+    }
+
+    const sortApplications = (apps) => {
+        let filteredList = [...apps]
+        if(searchValue != '')
+        {
+            filteredList = apps.filter((element) => {
+                return element[sortBy].toLowerCase().startsWith(searchValue.toLowerCase()) 
+            })
+        }
+
+        if(filteredList.length != 0)
+        {
+            filteredList.sort((a,b) => {
+                return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
+                })
+
+        }
+        setApplications(filteredList)
+    }
+
+    const updateApplication = (application) => {
+        const index = applications.findIndex((a) => {
+            return a.id === application.id
+        })
+
+        const tmp = [...applications]
+        tmp[index] = application
+        setApplicationsWrapper(tmp)
+    }
 
     const deleteApplication = async (applicationId) => {
         await applicationService.deleteUserApplication(applicationId)
 
-        const applications = await applicationService.getUserApplications()
-        setApplications(applications)
-    }
-
-    let filteredList = applications 
-    if(searchValue != '')
-    {
-        filteredList = applications.filter((element) => {
-            return element[sortBy].toLowerCase().startsWith(searchValue.toLowerCase()) 
-        })
-    }
-
-    if(filteredList.length != 0)
-    {
-        filteredList.sort((a,b) => {
-            return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
-            })
-
+        const a = await applicationService.getUserApplications()
+        setApplicationsWrapper(a)
     }
 
     return (
@@ -54,7 +70,7 @@ const Applications = ({searchValue, sortBy}) => {
 
         <div class="flex flex-col justify-center items-center pt-1">
         { createNewVisible ? 
-            <NewApplication setCreateNewVisible={setCreateNewVisible} setApplications={setApplications}/> : 
+            <NewApplication setCreateNewVisible={setCreateNewVisible} setApplications={setApplicationsWrapper}/> : 
             <div class="add-new-plus mt-3 mb-4" onClick={(e) => {e.preventDefault(); setCreateNewVisible(true)}}>
                 <div class="add-new-plus1 mt-3"></div>
                 <div class="add-new-plus2 mt-3"></div>
@@ -62,8 +78,8 @@ const Applications = ({searchValue, sortBy}) => {
         }
 
         {
-            filteredList.length != 0 ? filteredList.map((application,index) => ( 
-                <ListCard application={application} index={index} deleteApplication={deleteApplication}/>
+            applications.length != 0 ? applications.map((application) => ( 
+                <ListCard key={application.id} application={application} deleteApplication={deleteApplication} updateApplication={updateApplication} />
             ))
             :
             <div></div>
