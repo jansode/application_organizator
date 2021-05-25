@@ -1,30 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import applicationService from '../services/application'
-import Utils from './Utils'
 import ListCard from './ListCard'
 import NewApplication from './NewApplication'
 
 import 'react-dropdown/style.css'
 
-import squirell from '../images/squirell.jpeg'
-import plusImage from '../images/plus.jpg'
-
 import '../styles/index.css'
 
-import {
-    Link
-} from 'react-router-dom'
-
 const Applications = ({searchValue, sortBy}) => {
-
-    const didMountRef = useRef(false)
 
     const [applications, setApplications] = useState([])
     const [createNewVisible, setCreateNewVisible] = useState(false)
     
-    useEffect( async () => {
-        const apps = await applicationService.getUserApplications()
-        setApplicationsWrapper(apps)
+    useEffect(() => {
+
+        const f = async () => {
+            const apps = await applicationService.getUserApplications()
+            setApplicationsWrapper(apps)
+        }
+
+        f()
+
     }, [searchValue, sortBy]);
 
     const setApplicationsWrapper = (apps) => {
@@ -33,14 +29,14 @@ const Applications = ({searchValue, sortBy}) => {
 
     const sortApplications = (apps) => {
         let filteredList = [...apps]
-        if(searchValue != '')
+        if(searchValue !== '')
         {
             filteredList = apps.filter((element) => {
                 return element[sortBy].toLowerCase().startsWith(searchValue.toLowerCase()) 
             })
         }
 
-        if(filteredList.length != 0)
+        if(filteredList.length !== 0)
         {
             filteredList.sort((a,b) => {
                 return a[sortBy].localeCompare(b[sortBy],'en-US',{ignorePunctuation : true})
@@ -80,7 +76,7 @@ const Applications = ({searchValue, sortBy}) => {
         }
 
         {
-            applications.length != 0 ? applications.map((application) => ( 
+            applications.length !== 0 ? applications.map((application) => ( 
                 <ListCard key={application.id} application={application} deleteApplication={deleteApplication} updateApplication={updateApplication} />
             ))
             :

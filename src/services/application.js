@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let host = ''
-if(process.env.NODE_ENV == 'development')
+if(process.env.NODE_ENV === 'development')
 {
     host = 'http://localhost:3001'
 }
@@ -157,4 +157,16 @@ const deleteUserAppartment = async (appartmentId) => {
     return response.data
 }
 
-export default { login, getUserApplications, getUserApplication, updateUserApplication, getUserAppartment, getUserAppartments, deleteUserApplication, deleteUserAppartment, createUserApplication }
+const applicationService = {
+    login, 
+    getUserApplications, 
+    getUserApplication, 
+    updateUserApplication, 
+    getUserAppartment, 
+    getUserAppartments, 
+    deleteUserApplication, 
+    deleteUserAppartment, 
+    createUserApplication 
+}
+
+export default applicationService 

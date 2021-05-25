@@ -1,4 +1,3 @@
-import React from 'react'
 
 const getDateFormat = (date) => {
 
@@ -8,4 +7,8 @@ const getDateFormat = (date) => {
     return `${da}-${mo}-${ye}`
 }
 
-export default {getDateFormat} 
+const Utils = {
+    getDateFormat
+}
+
+export default Utils 

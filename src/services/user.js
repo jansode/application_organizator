@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let host = ''
-if(process.env.NODE_ENV == 'development')
+if(process.env.NODE_ENV === 'development')
 {
     host = 'http://localhost:3001'
 }
@@ -44,4 +44,10 @@ const createNewUser = async (user, pass) => {
     return response.data
 }
 
-export default {getUser, getAllUsers, createNewUser}
+const userService = {
+    getUser, 
+    getAllUsers, 
+    createNewUser
+}
+
+export default userService

@@ -12,10 +12,6 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import Delta from 'quill-delta'
 
-import {
-    Redirect
-} from 'react-router-dom'
-
 const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
     const quillRef = useRef(null) 
@@ -31,10 +27,10 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
     const [coverLetterVisible, setCoverLetterVisible] = useState(false)
     const [createNewFlag, setCreateNewFlag] = useState(false)
 
-    useEffect( async () => {
+    useEffect(() => {
 
         document.onclick = (e) => {
-            if(e.target.id != "calendar" && calendarWrapperRef.current && !calendarWrapperRef.current.contains(e.target))
+            if(e.target.id !== "calendar" && calendarWrapperRef.current && !calendarWrapperRef.current.contains(e.target))
             {
                 setCalendarVisible(false)        
             }

@@ -7,24 +7,24 @@ import orava from '../images/squirell.jpeg'
 
 import '../styles/index.css'
 
-import {
-    useLocation,
-    Link
-} from 'react-router-dom'
-
 const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisible}) => {
 
     const [menuOpen, setMenuOpen] = useState(false)
     const [username, setUsername] = useState('')
 
-    useEffect( async () => {
-        const user = await userService.getUser()
-        if(loggedIn)
-        {
-            setUsername(user.username)
+    useEffect(() => {
+
+        const f = async () =>{
+            const user = await userService.getUser()
+            if(loggedIn)
+            {
+                setUsername(user.username)
+            }
         }
 
-    }, [])
+        f()
+
+    }, [loggedIn])
 
     const dropdownOptions = [
         "Title",
@@ -33,8 +33,6 @@ const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisibl
     ]
 
     const defaultOption = dropdownOptions[0]
-
-    const location = useLocation().pathname
 
     if(loggedIn)
     {
@@ -63,14 +61,7 @@ const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisibl
 
 
     return (
-        <div>{/*
-        <div class="flex justify-between items-center bg-gray-50 p-2">
-            <div></div>
-            <div class="text-lg font-bold">
-                { location === '/login' ? <span>Sign up</span> : <span>Log in</span> }
-            </div>
-            */}
-        
+        <div> 
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { Redirect, Link} from 'react-router-dom'
 
 import '../styles/index.css'
 
-const Login = ({ setToken }) => {
+const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -13,7 +13,7 @@ const Login = ({ setToken }) => {
     {
         return (
             <div>
-            <Redirect to='/dashboard' />
+                <Redirect to='/applications' />
             </div>
         )
     }

@@ -4,8 +4,6 @@ import Utils from './Utils'
 import { saveAs } from 'file-saver'
 import { pdfExporter } from 'quill-to-pdf'
 
-import QuillToPdf from 'quill-to-pdf'
-
 import sentImage from '../images/mail-sent.jpg'
 import editImage from '../images/mail-edited.jpg'
 
@@ -16,10 +14,6 @@ import 'react-quill/dist/quill.snow.css'
 import Delta from 'quill-delta'
 
 import applicationService from '../services/application'
-
-import {
-    Link
-} from 'react-router-dom'
 
 const ListCard = ({application, deleteApplication, updateApplication}) => {
 
@@ -124,7 +118,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     }
 
     return (
-        <div class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2" key={application.id}> 
+        <div class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3">
@@ -152,7 +146,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
                     <p class="text-base text-red-400">No letter added</p>
 
                 }
-                    <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a>
+                    <div><a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
             </div>
             :
 
@@ -166,7 +160,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
                 {
                     delta.length() != 0 ?
-                    <a href="" class="text-base text-green-400" onClick={(e) => {e.preventDefault(); downloadPdf()}}>Cover letter</a>
+                    <div><a href="" class="text-base text-green-400" onClick={(e) => {e.preventDefault(); downloadPdf()}}>Cover letter</a></div>
                     :
                     <p class="text-base text-red-400">No letter added</p>
 

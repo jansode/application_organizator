@@ -7,7 +7,6 @@ const isLoggedIn = () => {
 
 const AuthRoute = (props) => {
 
-    const { path } = props
     if(!isLoggedIn())
     {
         return <Redirect to="/" />

@@ -1,9 +1,7 @@
 
 import React from 'react'
 import { useState } from 'react'
-import applicationService from '../services/application'
 import userService from '../services/user'
-import { Redirect, Link} from 'react-router-dom'
 
 import '../styles/index.css'
 
@@ -12,38 +10,38 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    /*
-    if(localStorage.getItem('token') != null)
-    {
-        return (
-            <div>
-            <Redirect to='/dashboard' />
-            </div>
-        )
-    }
-    */
+    const signup = (e) => {
 
-    const signup = async (e) => {
-        e.preventDefault()
+        // This fixes a warning to prevent race conditions.
+        const f = async () => {
+            e.preventDefault()
 
-        if(password != confirmPassword)
+            if(password !== confirmPassword)
+            {
+                // TODO DO ERROR MESSAGE
+                return false  
+            }
+
+            const users = await userService.getAllUsers()
+            const filteredUsers = users.filter((user) => {
+                return user.username === username
+            })
+
+            if(filteredUsers.length > 0)
+            {
+                // TODO DO ERROR MESSAGE
+                return false
+            }
+
+            await userService.createNewUser(username,password) 
+            return true
+        }
+
+        if(!f())
         {
-            // TODO DO ERROR MESSAGE
             return
         }
 
-        const users = await userService.getAllUsers()
-        const filteredUsers = users.filter((user) => {
-            return user.username === username
-        })
-
-        if(filteredUsers.length > 0)
-        {
-            // TODO DO ERROR MESSAGE
-            return
-        }
-
-        const response = await userService.createNewUser(username,password) 
         window.location.reload()
     }
 
