@@ -30,7 +30,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     const [editUrl, setEditUrl] = useState(application.url)
     const [editLocation, setEditLocation] = useState(application.location)
     const [editDate, setEditDate] = useState(new Date(Date.parse(application.end_date)))
-    const [editCoverLetter, setEditCoverLetter] = useState(new Delta())
+    const [editCoverLetter, setEditCoverLetter] = useState(new Delta(application.cover_letter))
 
     const [calendarVisible, setCalendarVisible] = useState(false)
     const [coverLetterVisible, setCoverLetterVisible] = useState(false)
@@ -54,6 +54,11 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
     const updateListItem = async () => {
 
+        if(quillRef.current != null)
+        {
+            await quillRef.current.blur()
+        }
+
         const updated_application = {
             id: application.id,
             title: editTitle,
@@ -61,7 +66,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
             location: editLocation,
             status: statusImage,
             end_date: editDate,
-            cover_letter: application.cover_letter
+            cover_letter: editCoverLetter 
         }
 
         await applicationService.updateUserApplication(application.id, updated_application)
@@ -69,11 +74,9 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
         setEditing(false)
     }
 
-    const delta = new Delta(application.cover_letter)
-
     const downloadPdf = async () => {
 
-        const pdfAsBlob = await pdfExporter.generatePdf(delta)
+        const pdfAsBlob = await pdfExporter.generatePdf(editCoverLetter)
         saveAs(pdfAsBlob,DEFAULT_PDF_NAME)
     }
 
@@ -111,7 +114,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     }
 
     let coverLetterDiv = <div></div>
-    if(coverLetterVisible)
+    if(editing || coverLetterVisible)
     {
         coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {setEditCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
 
@@ -140,7 +143,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(application.end_date)))}</p>
 
                 {
-                    delta.length() != 0 ?
+                    editCoverLetter.length() != 0 ?
                     <a href="" class="text-base text-green-400" onClick={(e) => {e.preventDefault(); downloadPdf()}}>Cover letter</a>
                     :
                     <p class="text-base text-red-400">No letter added</p>
@@ -158,14 +161,9 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
                 {calendarDiv}
 
-                {
-                    delta.length() != 0 ?
-                    <div><a href="" class="text-base text-green-400" onClick={(e) => {e.preventDefault(); downloadPdf()}}>Cover letter</a></div>
-                    :
-                    <p class="text-base text-red-400">No letter added</p>
+                {coverLetterDiv}
 
-                }
-                    <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); updateListItem()}}>Save</a>
+                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); updateListItem()}}>Save</a>
             </div>
 
             }
