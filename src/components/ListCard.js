@@ -109,10 +109,10 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     }
 
     const getUrlFormat = () => {
-        let formatted = application.url
-        if(!application.url.trim().startsWith('http://'))
+        let formatted = application.url.trim()
+        if(!formatted.startsWith('http://') && !formatted.startsWith('https://'))
         {
-            formatted = 'http://' + formatted 
+            formatted = 'https://' + formatted 
         }
 
         return formatted
