@@ -35,11 +35,17 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     const [calendarVisible, setCalendarVisible] = useState(false)
     const [coverLetterVisible, setCoverLetterVisible] = useState(false)
 
-    useEffect( async () => {
+    useEffect(() => {
         document.onclick = (e) => {
-            if(e.target.id != "calendar" && calendarWrapperRef.current && !calendarWrapperRef.current.contains(e.target))
+
+            if(e.target.id !== "calendar" || (calendarWrapperRef.current && !calendarWrapperRef.current.contains(e.target)))
             {
                 setCalendarVisible(false)        
+            }
+
+            if(e.target.id !== "list-card-div")
+            {
+                //setEditing(false)
             }
         }
 
@@ -53,6 +59,28 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     }
 
     const updateListItem = async () => {
+
+        let missingFields = false
+        if(editTitle === "")
+        {
+            document.getElementById('title').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+        if(editUrl === "")
+        {
+            document.getElementById('url').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+        if(editLocation === "")
+        {
+            document.getElementById('location').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+
+        if(missingFields)
+        {
+            return
+        }
 
         if(quillRef.current != null)
         {
@@ -121,7 +149,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     }
 
     return (
-        <div class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
+        <div id="list-card-div" class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3">
@@ -154,9 +182,9 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
             :
 
             <div class="row-span-1 col-span-2 pl-2">
-                <div class="text-lg text-blue-600 border-2"><input class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
-                <div class="text-base text-blue-400 border-2"><input class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
-                <div class="text-base border-2"><input class="w-full" value={editLocation} onChange={(e) => {setEditLocation(e.target.value)}}/></div>
+                <div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
+                <div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
+                <div class="text-base border-2"><input id="location" class="w-full" value={editLocation} onChange={(e) => {setEditLocation(e.target.value)}}/></div>
                 <div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
 
                 {calendarDiv}

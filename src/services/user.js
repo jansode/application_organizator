@@ -41,21 +41,25 @@ const createNewUser = async (user, pass) => {
     }
 
     const response = await axios.post(baseUrl+'/users', newUser, config)
+
+
+    console.log(response.data)
     return response.data
 }
 
 const userExists = async(username) => {
 
-    const data = {
-        username : username
-    }
-
     const config = {
         headers : {'Content-Type' : 'application/json'}
     }
 
-    const response = await axios.get(baseUrl+'/users/exists', data , config)
-    return response.user_exists
+    try {
+        const result = await axios.get(baseUrl+'/users/exists/'+username, config)
+        return result.data.user_exists
+
+    } catch(error) {
+        console.log(error)
+    }
 }
 
 const userService = {

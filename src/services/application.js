@@ -15,8 +15,14 @@ const login = async (user,pass) => {
         password : pass 
     }
 
-    const response = await axios.post(baseUrl+'/login', params)
-    return response.data
+    try 
+    {
+        const response = await axios.post(baseUrl+'/login', params)
+        return response.data
+
+    } catch(error) {
+        return null          
+    }
 }
 
 const getUserApplications = async () => {
