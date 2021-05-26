@@ -30,7 +30,7 @@ const getAllUsers = async () => {
 }
 
 const createNewUser = async (user, pass) => {
-    
+
     const newUser = {
         username: user,
         password: pass 
@@ -44,10 +44,25 @@ const createNewUser = async (user, pass) => {
     return response.data
 }
 
+const userExists = async(username) => {
+
+    const data = {
+        username : username
+    }
+
+    const config = {
+        headers : {'Content-Type' : 'application/json'}
+    }
+
+    const response = await axios.get(baseUrl+'/users/exists', data , config)
+    return response.user_exists
+}
+
 const userService = {
     getUser, 
     getAllUsers, 
-    createNewUser
+    createNewUser,
+    userExists
 }
 
 export default userService
