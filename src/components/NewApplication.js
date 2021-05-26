@@ -108,27 +108,20 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
         'link' 
       ]
 
+    const calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
+    const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
 
-    let calendarDiv = <div></div>
-    if(calendarVisible)
-    {
-        calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
-    }
-
-    let coverLetterDiv = <div></div>
-    if(coverLetterVisible)
-    {
-        coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
-
-    }
 
     return (
         <div class="flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2"> 
+
+            {/* Delete post */}
             <div class="absolute top-2 right-3 z-10">
                 <a href="" onClick={(e) => {e.preventDefault(); setCreateNewVisible(false)}}>x</a>
             </div>
 
+            {/* Input area */}
             <div class="flex flex-col justify-center items-start pr-5 w-10/12">
 
                 <div class="text-lg">Title:</div> <input id="title" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border = ''; setFormTitle(e.target.value)}}/>
@@ -139,11 +132,11 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
                 <div class="text-lg">End date:</div><input class="border-2 w-full" id="calendar" type="text" value={Utils.getDateFormat(formDate)} onFocus={() => {setCalendarVisible(true)}} />
 
-                {calendarDiv}
+                {calendarVisible && calendarDiv}
                 
                 <div class="text-lg"><a href="" class="text-lg text-blue-400 " onClick={(e) => {e.preventDefault(); setCoverLetterVisible(!coverLetterVisible)}}>Cover letter</a></div>
 
-                {coverLetterDiv}
+                {coverLetterVisible && coverLetterDiv}
 
                 <div class="flex flex-row justify-center pt-6 w-full">
                     <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={createNewButtonHandler}>Create</button>

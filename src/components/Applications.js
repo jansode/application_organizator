@@ -75,8 +75,8 @@ const Applications = ({searchValue, sortBy}) => {
             </div>
         }
 
-        {
-            applications.length !== 0 ? applications.map((application) => ( 
+        {applications.length !== 0 ? 
+            applications.map((application) => ( 
                 <ListCard key={application.id} application={application} deleteApplication={deleteApplication} updateApplication={updateApplication} />
             ))
             :

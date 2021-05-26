@@ -135,18 +135,10 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     'link' 
     ]
 
-    let calendarDiv = <div></div>
-    if(calendarVisible)
-    {
-        calendarDiv = <div ref={calendarWrapperRef}><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
-    }
+    const calendarDiv = <div ref={calendarWrapperRef}><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
-    let coverLetterDiv = <div></div>
-    if(editing || coverLetterVisible)
-    {
-        coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {setEditCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
+    const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {setEditCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
 
-    }
 
     return (
         <div id="list-card-div" class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
@@ -187,9 +179,9 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
                 <div class="text-base border-2"><input id="location" class="w-full" value={editLocation} onChange={(e) => {setEditLocation(e.target.value)}}/></div>
                 <div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
 
-                {calendarDiv}
+                {calendarVisible && calendarDiv}
 
-                {coverLetterDiv}
+                {(coverLetterVisible || editing) && coverLetterDiv}
 
                 <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); updateListItem()}}>Save</a>
             </div>
