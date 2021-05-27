@@ -6,10 +6,13 @@ import InfoBox from './InfoBox'
 
 import '../styles/index.css'
 
+import useMessageQueue from './useMessageQueue'
+
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
+
+    const [messages, addMessage] = useMessageQueue(10000)
 
     if(localStorage.getItem('token') != null)
     {
@@ -38,13 +41,13 @@ const Login = () => {
 
         if(missingFields)
         {
-            setError('Missing fields.')
+            addMessage({message:'Missing fields.',type:'error'})
             return
         }
 
         const token = await applicationService.login(username,password) 
         if(token === null){
-            setError('Username or password is incorrect.')
+            addMessage({message:'Username or password is incorrect.', type:'error'})
             return
         }
 
@@ -74,8 +77,12 @@ const Login = () => {
                 </div>
             </form>
         </div>
+            
+        {messages && messages.map((e,i) => {
+            return <InfoBox message={e.message} type={e.type} key={e.key}/>
+        })}
 
-        {error !== '' && <InfoBox message={error} type='error' displayTime='5000' />}
+
     </div>
    )
 }

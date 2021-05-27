@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import userService from '../services/user'
 import InfoBox from './InfoBox'
 
+import useMessageQueue from './useMessageQueue'
+
 import '../styles/index.css'
 
 const SignUp = () => {
@@ -13,6 +15,8 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+
+    const [messages, addMessage] = useMessageQueue(10000)
 
     const signup = (e) => {
 
@@ -37,7 +41,7 @@ const SignUp = () => {
 
         if(missingFields)
         {
-            setError('Missing fields.')
+            addMessage({message:'Missing fields', type:'error'})
             return
         }
 
@@ -46,6 +50,7 @@ const SignUp = () => {
 
             if(password !== confirmPassword)
             {
+                addMessage({message:'Password fields don\'t match', type:'error'})
                 setError('Password fields don\'t match.')
                 return false  
             }
@@ -53,12 +58,12 @@ const SignUp = () => {
             const user_exists = await userService.userExists(username)
             if(user_exists)
             {
-                setError('User already exists.')
+                addMessage({message:'User already exists.', type:'error'})
                 return false
             }
 
             await userService.createNewUser(username,password) 
-            setSuccess('User successfully created.')
+            addMessage({message:'User successfully created.', type:'success'})
             return true
         }
 
@@ -88,9 +93,9 @@ const SignUp = () => {
                 </div>
             </form>
         </div>
-
-            {error !== '' && <InfoBox message={error} type='error' displayTime='5000' />}
-            {success !== '' && <InfoBox message={success} type='success' displayTime='5000' />}
+        {messages && messages.map((e,i) => {
+            return <InfoBox message={e.message} type={e.type} key={e.key}/>
+        })}
     </div>
    )
 }
