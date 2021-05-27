@@ -147,14 +147,19 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
             <div class="absolute top-2 right-3">
                 <a href="" onClick={(e) => {e.preventDefault(); deleteApplication(application.id)}}>x</a>
             </div>
-
+            
             {/* Edit/Sent icon X */}
+            {!editing ? 
             <div class="row-span-1 col-span-1 flex flex-row items-center">
                 <a href="" onClick={(e) => {e.preventDefault()}}><img src={statusImage === 'edit' ? editImage : sentImage} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}}width="150" height="150"></img></a>
             </div>
+            :
+            <div></div>
+            }
 
             {/* Info area */}
             {!editing ?
+
 
             <div class="row-span-1 col-span-2 pl-2">
                 <div class="text-lg text-blue-600"><p>{application.title}</p></div>
@@ -173,7 +178,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
             </div>
             :
 
-            <div class="row-span-1 col-span-2 pl-2">
+            <div class="row-span-1 col-span-4 pl-2 pr-6">
                 <div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
                 <div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
                 <div class="text-base border-2"><input id="location" class="w-full" value={editLocation} onChange={(e) => {setEditLocation(e.target.value)}}/></div>
