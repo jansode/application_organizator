@@ -22,6 +22,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
     const quillRef = useRef(null) 
     const calendarWrapperRef = useRef(null)
+    const editCardWrapperRef = useRef(null)
 
     const [statusImage, setStatusImage] = useState('edit')
     const [editing, setEditing] = useState(false)
@@ -43,13 +44,13 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
                 setCalendarVisible(false)        
             }
 
-            if(e.target.id !== "list-card-div")
+            if(e.target.id !== 'edit-button' && editCardWrapperRef.current && !editCardWrapperRef.current.contains(e.target))
             {
-                //setEditing(false)
+                setEditing(false)
             }
         }
 
-    }, [calendarWrapperRef])
+    }, [editCardWrapperRef, calendarWrapperRef])
 
     const updateSentStatus = async (status) => {
         const data = {'status': status}
@@ -142,7 +143,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     console.log(calendarVisible)
 
     return (
-        <div id="list-card-div" class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
+        <div ref={editCardWrapperRef} id="list-card-div" class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3">
@@ -175,7 +176,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
                     <p class="text-base text-red-400">No letter added</p>
 
                 }
-                    <div><a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
+                    <div><a href="" id="edit-button" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
             </div>
             :
 
