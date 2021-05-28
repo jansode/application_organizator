@@ -17,7 +17,7 @@ import applicationService from '../services/application'
 
 const ListCard = ({application, deleteApplication, updateApplication}) => {
 
-    const MAX_URL_SIZE = 60
+    const MAX_URL_SIZE = 25 
     const DEFAULT_PDF_NAME = 'cover-letter.pdf'
 
     const quillRef = useRef(null) 
@@ -109,7 +109,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
         saveAs(pdfAsBlob,DEFAULT_PDF_NAME)
     }
 
-    const getUrlFormat = () => {
+    const handleUrlPrefix = () => {
         let formatted = application.url.trim()
         if(!formatted.startsWith('http://') && !formatted.startsWith('https://'))
         {
@@ -117,6 +117,17 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
         }
 
         return formatted
+    }
+
+    const getUrlFormat = () => {
+        let substring = application.url.substring(0,MAX_URL_SIZE)
+
+        if(substring.length == MAX_URL_SIZE)
+        {
+            substring += '...' 
+        }
+
+        return substring
     }
 
     const modules = {
@@ -165,7 +176,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
             <div class="row-span-1 col-span-2 pl-2">
                 <div class="text-lg text-blue-600"><p>{application.title}</p></div>
-                <a href={getUrlFormat()}  class="text-base text-blue-400">{application.url.substring(0,MAX_URL_SIZE)}</a>
+                <a href={handleUrlPrefix()}  class="text-base text-blue-400">{getUrlFormat()}</a>
                 <p class="text-base">{application.location}</p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(application.end_date)))}</p>
 
