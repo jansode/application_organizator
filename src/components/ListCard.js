@@ -15,11 +15,9 @@ import Delta from 'quill-delta'
 
 import applicationService from '../services/application'
 
+import Constants from '../constants'
+
 const ListCard = ({application, deleteApplication, updateApplication}) => {
-
-    const MAX_URL_SIZE = 25 
-    const DEFAULT_PDF_NAME = 'cover-letter.pdf'
-
     const quillRef = useRef(null) 
     const calendarWrapperRef = useRef(null)
     const editCardWrapperRef = useRef(null)
@@ -106,7 +104,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
     const downloadPdf = async () => {
 
         const pdfAsBlob = await pdfExporter.generatePdf(editCoverLetter)
-        saveAs(pdfAsBlob,DEFAULT_PDF_NAME)
+        saveAs(pdfAsBlob,Constants.DEFAULT_PDF_NAME)
     }
 
     const handleUrlPrefix = () => {
@@ -119,15 +117,13 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
         return formatted
     }
 
-    const getUrlFormat = () => {
-        let substring = application.url.substring(0,MAX_URL_SIZE)
-
-        if(substring.length == MAX_URL_SIZE)
+    const limitDisplayTextSize = (text, max_size) => {
+        let substring = text.substring(0,max_size)
+        if(substring.length == max_size)
         {
             substring += '...' 
         }
-
-        return substring
+        return substring 
     }
 
     const modules = {
@@ -151,7 +147,6 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
     const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {setEditCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
 
-    console.log(calendarVisible)
 
     return (
         <div ref={editCardWrapperRef} id="list-card-div" class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
@@ -175,9 +170,9 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
 
             <div class="row-span-1 col-span-2 pl-2">
-                <div class="text-lg text-blue-600"><p>{application.title}</p></div>
-                <a href={handleUrlPrefix()}  class="text-base text-blue-400">{getUrlFormat()}</a>
-                <p class="text-base">{application.location}</p>
+                <div class="text-wrap text-lg text-blue-600">{limitDisplayTextSize(application.title,Constants.MAX_TITLE_SIZE)}</div>
+                <a href={handleUrlPrefix()}  class=" text-wrap text-base text-blue-400">{limitDisplayTextSize(application.url,Constants.MAX_URL_SIZE)}</a>
+                <p class="text-wrap text-base">{application.location}</p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(application.end_date)))}</p>
 
                 {
@@ -189,6 +184,7 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
                 }
                     <div><a href="" id="edit-button" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
             </div>
+
             :
 
             <div class="row-span-1 col-span-4 pl-2 pr-6">
