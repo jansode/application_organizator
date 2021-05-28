@@ -57,7 +57,7 @@ const Login = () => {
 
     return (
     <div class="flex flex-col justify-center items-center">
-        <div class="bg-white rounded border-gray-400 m-4 p-5 w-10/12 md:w-1/4 h-80 items-center flex flex-col justify-center">
+        <div class="bg-white rounded border-gray-400 m-4 p-5 w-10/12 md:w-1/3 h-80 items-center flex flex-col justify-center shadow-md">
             <h2 class="text-3xl pt-5">Log in</h2>
             <form class="pt-5" onSubmit={login}>
                 <label>
