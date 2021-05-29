@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Login from './components/Login'
 import Applications from './components/Applications'
+import Appartments from './components/Appartments'
 import NewApplication from './components/NewApplication'
 import TopBar from './components/TopBar'
 import SignUp from './components/SignUp'
@@ -45,8 +46,8 @@ const App = () => {
                     <AuthRoute exact path="/applications">
                         <Applications searchValue={searchValue} sortBy={sortBy} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible} />
                     </AuthRoute>
-                    <AuthRoute path="/applications/new">
-                        <NewApplication />
+                    <AuthRoute exact path="/appartments">
+                        <Appartments searchValue={searchValue} sortBy={sortBy} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible} />
                     </AuthRoute>
                 </Switch>
             </Router>

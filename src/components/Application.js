@@ -17,7 +17,8 @@ import applicationService from '../services/application'
 
 import Constants from '../constants'
 
-const ListCard = ({application, deleteApplication, updateApplication}) => {
+const Application = ({application, deleteApplication, updateApplication}) => {
+
     const quillRef = useRef(null) 
     const calendarWrapperRef = useRef(null)
     const editCardWrapperRef = useRef(null)
@@ -206,4 +207,4 @@ const ListCard = ({application, deleteApplication, updateApplication}) => {
 
 }
 
-export default ListCard
+export default Application 
