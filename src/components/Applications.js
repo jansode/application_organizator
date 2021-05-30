@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import applicationService from '../services/application'
 import Application from './Application'
 import NewApplication from './NewApplication'
-
 import 'react-dropdown/style.css'
 
 import '../styles/index.css'

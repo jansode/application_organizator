@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 
 const useMessageQueue = (removeInterval) => {
     const [key, setKey] = useState(0)

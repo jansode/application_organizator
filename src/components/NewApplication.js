@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import applicationService from '../services/application'
 import Utils from './Utils'
+import useFormValidator from './useFormValidator'
+import ValidationErrors from './ValidationErrors'
 
 import Calendar from 'react-calendar'
 
@@ -27,6 +29,14 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
     const [coverLetterVisible, setCoverLetterVisible] = useState(false)
     const [createNewFlag, setCreateNewFlag] = useState(false)
 
+    const validationFields = [
+            {id:'title', type:'string', required:true},
+            {id:'url', type:'string', required:true},
+            {id:'location', type:'string', required:true},
+    ]
+
+    const [validationState, validateForm] = useFormValidator(validationFields)
+
     useEffect(() => {
 
         document.onclick = (e) => {
@@ -36,13 +46,12 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
             }
         }
 
-        if(createNewFlag)
+        if(validationState.success)
         {
             createNew()
-            setCreateNewFlag(false)
         }
 
-    }, [createNewFlag, calendarWrapperRef])
+    }, [validationState, calendarWrapperRef])
 
     const createNewButtonHandler = async () => {
         
@@ -138,8 +147,10 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
                 {coverLetterVisible && coverLetterDiv}
 
+                <ValidationErrors validationState = {validationState} />
+
                 <div class="flex flex-row justify-center pt-6 w-full">
-                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={createNewButtonHandler}>Create</button>
+                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={validateForm}>Create</button>
                 </div>
             </div>
         </div>

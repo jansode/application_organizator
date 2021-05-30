@@ -4,8 +4,7 @@ import Utils from './Utils'
 import { saveAs } from 'file-saver'
 import { pdfExporter } from 'quill-to-pdf'
 
-import sentImage from '../images/mail-sent.jpg'
-import editImage from '../images/mail-edited.jpg'
+import appartmentImage from '../images/appartment.jpeg'
 
 import Calendar from 'react-calendar'
 
@@ -28,6 +27,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const [editTitle, setEditTitle] = useState(appartment.title)
     const [editUrl, setEditUrl] = useState(appartment.url)
     const [editAddress, setEditAddress] = useState(appartment.address)
+    const [editSize, setEditSize] = useState(appartment.size)
     const [editDate, setEditDate] = useState(new Date(Date.parse(appartment.free_date)))
 
     const [calendarVisible, setCalendarVisible] = useState(false)
@@ -71,6 +71,11 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         if(editAddress === "")
         {
             document.getElementById('address').style.border = '1px solid #EF4444'
+            missingFields = true
+        }
+        if(editSize === "")
+        {
+            document.getElementById('size').style.border = '1px solid #EF4444'
             missingFields = true
         }
 
@@ -117,23 +122,6 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         return substring 
     }
 
-    const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link'],
-      ['clean']
-    ],
-    }
-
-    const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link' 
-    ]
-
     const calendarDiv = <div ref={calendarWrapperRef} class="md:w-1/2"><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
     return (
@@ -147,7 +135,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             {/* Edit/Sent icon X */}
             {!editing ? 
             <div class="row-span-1 col-span-1 flex flex-row items-center">
-                <a href="" onClick={(e) => {e.preventDefault()}}><img src={statusImage === 'edit' ? editImage : sentImage} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}}width="150" height="150"></img></a>
+                <a href="" onClick={(e) => {e.preventDefault()}}><img src={appartmentImage} width="150" height="150"></img></a>
             </div>
             :
             <div></div>
@@ -156,11 +144,11 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             {/* Info area */}
             {!editing ?
 
-
             <div class="row-span-1 col-span-2 pl-2">
                 <div class="text-wrap text-lg text-blue-600">{limitDisplayTextSize(appartment.title,Constants.MAX_TITLE_SIZE)}</div>
                 <a href={handleUrlPrefix()}  class=" text-wrap text-base text-blue-400">{limitDisplayTextSize(appartment.url,Constants.MAX_URL_SIZE)}</a>
                 <p class="text-wrap text-base">{appartment.address}</p>
+                <p class="text-wrap text-base">{appartment.size}</p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(appartment.free_date)))}</p>
                 <div><a href="" id="edit-button" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
             </div>
@@ -170,7 +158,8 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             <div class="row-span-1 col-span-4 pl-2 pr-6">
                 <div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
                 <div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
-                <div class="text-base border-2"><input id="location" class="w-full" value={editAddress} onChange={(e) => {setEditAddress(e.target.value)}}/></div>
+                <div class="text-base border-2"><input id="address" class="w-full" value={editAddress} onChange={(e) => {setEditAddress(e.target.value)}}/></div>
+                <div class="text-base border-2"><input id="size" class="w-full" value={editSize} onChange={(e) => {setEditSize(e.target.value)}}/></div>
                 <div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
 
                 {calendarVisible && calendarDiv}

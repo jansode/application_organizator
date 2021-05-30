@@ -1,3 +1,6 @@
+const capitalizeFirst = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
 const getDateFormat = (date) => {
 
@@ -8,7 +11,8 @@ const getDateFormat = (date) => {
 }
 
 const Utils = {
-    getDateFormat
+    getDateFormat,
+    capitalizeFirst
 }
 
 export default Utils 

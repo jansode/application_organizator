@@ -37,7 +37,7 @@ const getUserAppartment = async (appartmentId) => {
         headers : { 'Authorization' : `Bearer ${token}` , 'Content-Type' : 'application/json'}
     }
 
-    const response = await axios.get(baseUrl+`/appartment/${appartmentId}`, config)
+    const response = await axios.get(baseUrl+`/appartments/${appartmentId}`, config)
     return response.data
 }
 
@@ -53,7 +53,7 @@ const updateUserAppartment = async (appartmentId, data) => {
         headers : { 'Authorization' : `Bearer ${token}` , 'Content-Type' : 'application/json'}
     }
 
-    const response = await axios.put(baseUrl+`/appartment/${appartmentId}`, data, config)
+    const response = await axios.put(baseUrl+`/appartments/${appartmentId}`, data, config)
     return response.data
 }
 

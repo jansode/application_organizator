@@ -4,7 +4,6 @@ import Appartment from './Appartment'
 import NewAppartment from './NewAppartment'
 
 import 'react-dropdown/style.css'
-
 import '../styles/index.css'
 
 const Appartments = ({searchValue, sortBy}) => {

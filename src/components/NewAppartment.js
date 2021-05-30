@@ -1,29 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react'
 import appartmentService from '../services/appartment'
 import Utils from './Utils'
-
 import Calendar from 'react-calendar'
+import ValidationErrors from './ValidationErrors'
 
 import '../styles/index.css'
 import 'react-calendar/dist/Calendar.css';
-import 'quill/dist/quill.snow.css'
 
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
-import Delta from 'quill-delta'
+import useFormValidator from './useFormValidator'
 
 const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
 
-    const quillRef = useRef(null) 
     const calendarWrapperRef = useRef(null)
 
     const [formTitle, setFormTitle] = useState('')
     const [formUrl, setFormUrl] = useState('')
     const [formDate, setFormDate] = useState(new Date(Date.now()))
     const [formAddress, setFormAddress] = useState('')
+    const [formSize, setFormSize] = useState('')
 
     const [calendarVisible, setCalendarVisible] = useState(false)
     const [createNewFlag, setCreateNewFlag] = useState(false)
+    const [displayErrors, setDisplayErrors] = useState(false)
+
+    const validationFields = [
+            {id:'title', type:'string', required:true},
+            {id:'url', type:'string', required:true},
+            {id:'address', type:'string', required:true},
+            {id:'size', type:'int', required:true}
+    ]
+
+    const [validationState, validateForm] = useFormValidator(validationFields)
 
     useEffect(() => {
 
@@ -34,50 +41,22 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
             }
         }
 
-        if(createNewFlag)
+        if(validationState.success)
         {
             createNew()
-            setCreateNewFlag(false)
         }
 
-    }, [createNewFlag, calendarWrapperRef])
-
-    const createNewButtonHandler = async () => {
-        
-        let missingFields = false
-        if(formTitle === "")
-        {
-            document.getElementById('title').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(formUrl === "")
-        {
-            document.getElementById('url').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(formAddress === "")
-        {
-            document.getElementById('address').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-
-        if(missingFields)
-        {
-            return
-        }
-
-        if(quillRef.current != null)
-        {
-            await quillRef.current.blur()
-        }
-        setCreateNewFlag(true)
-    }
+    }, [validationState, calendarWrapperRef])
 
     const createNew = async (e) => {
+
+        const appartmentSize = parseInt(formSize)
+
         await appartmentService.createUserAppartment({
             title: formTitle,
             url: formUrl,
             address : formAddress,
+            size: appartmentSize,
             free_date: formDate,
         })
 
@@ -106,15 +85,20 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
 
                 <div class="text-lg">Address:</div> <input id="address" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border =''; setFormAddress(e.target.value)}}/>
 
+                <div class="text-lg">Size:</div><input id="size" class="border-2 w-full" type="text" onChange={(e) => {e.preventDefault(); setFormSize(e.target.value)}}/>
+
                 <div class="text-lg">Free date:</div><input class="border-2 w-full" id="calendar" type="text" value={Utils.getDateFormat(formDate)} onFocus={() => {setCalendarVisible(true)}} />
 
                 {calendarVisible && calendarDiv}
 
+                <ValidationErrors validationState = {validationState} />
+
                 <div class="flex flex-row justify-center pt-6 w-full">
-                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={createNewButtonHandler}>Create</button>
+                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={validateForm}>Create</button>
                 </div>
 
             </div>
+
         </div>
 
     )
