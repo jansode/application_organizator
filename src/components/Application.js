@@ -152,7 +152,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
             
             {/* Edit/Sent icon X */}
             {!editing ? 
-            <div class="row-span-1 col-span-1 flex flex-row items-center">
+            <div class="row-span-1 col-span-1 flex flex-row items-center justify-center">
                 <a href="" onClick={(e) => {e.preventDefault()}}><img src={statusImage === 'edit' ? editImage : sentImage} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}}width="150" height="150"></img></a>
             </div>
             :

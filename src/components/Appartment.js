@@ -124,7 +124,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             
             {/* Appartment image */}
             {!editing ? 
-            <div class="row-span-1 col-span-1 flex flex-row items-center">
+            <div class="row-span-1 col-span-1 flex flex-row items-center justify-center">
                 <a href="" onClick={(e) => {e.preventDefault()}}><img src={appartmentImage} width="150" height="150"></img></a>
             </div>
             :
