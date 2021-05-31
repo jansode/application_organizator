@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
+
 import Utils from './Utils'
+import Constants from '../constants'
+import appartmentImage from '../images/appartment.jpeg'
 
 import { saveAs } from 'file-saver'
 import { pdfExporter } from 'quill-to-pdf'
-
-import appartmentImage from '../images/appartment.jpeg'
 
 import Calendar from 'react-calendar'
 
@@ -13,10 +14,12 @@ import 'react-quill/dist/quill.snow.css'
 import Delta from 'quill-delta'
 
 import appartmentService from '../services/appartment'
-import Constants from '../constants'
 
 import useFormValidator from './useFormValidator'
 import ValidationErrors from './ValidationErrors'
+
+import { Icon, InlineIcon } from '@iconify/react'
+import fileImageOutline from '@iconify-icons/mdi/file-image-outline'
 
 const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
@@ -45,6 +48,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const [validationState, validateForm] = useFormValidator(validationFields)
 
     useEffect(() => {
+
         document.onclick = (e) => {
 
             if(e.target.id !== "calendar" && calendarWrapperRef.current && !calendarWrapperRef.current.contains(e.target))
@@ -65,13 +69,6 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     }, [validationState, editCardWrapperRef, calendarWrapperRef])
 
-    const updateSentStatus = async (status) => {
-        const data = {'status': status}
-        await appartmentService.updateUserAppartment(appartment.id,data)
-
-        setStatusImage(status)
-    }
-
     const updateListItem = async () => {
 
         if(quillRef.current != null)
@@ -83,9 +80,9 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             id: appartment.id,
             title: editTitle,
             url: editUrl,
-            location: editAddress,
-            status: statusImage,
+            address: editAddress,
             free_date: editDate,
+            size: editSize
         }
 
         await appartmentService.updateUserAppartment(appartment.id, updated_appartment)
@@ -112,6 +109,34 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         return substring 
     }
 
+    const chooseImage = () => {
+
+        let input = document.createElement('input')
+        input.type = 'file'
+        input.id = 'file-input'
+        input.click()
+        input.onchange = () => {
+
+            const f = async () => 
+            {
+                const file = input.files[0]
+
+                if(!file.type.match('image.*'))
+                {
+                    alert("The uploaded file needs to be an image.")
+                    return
+                }
+
+                let formData = new FormData()
+                formData.append('imageData', input.files[0])
+                const updated = await appartmentService.uploadAppartmentImage(appartment.id,formData)
+                updateAppartment(updated)
+            }
+
+            f()
+        }
+    }
+
     const calendarDiv = <div ref={calendarWrapperRef} class="md:w-1/2"><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
     return (
@@ -124,9 +149,10 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             
             {/* Appartment image */}
             {!editing ? 
-            <div class="row-span-1 col-span-1 flex flex-row items-center justify-center">
-                <a href="" onClick={(e) => {e.preventDefault()}}><img src={appartmentImage} width="150" height="150"></img></a>
+            <div onClick={() => { chooseImage() } } class="row-span-1 col-span-1 flex flex-row items-center justify-center" style={{cursor : 'pointer'}}>
+                    <Icon icon={fileImageOutline} width="150" height="150" />
             </div>
+
             :
             <div></div>
             }

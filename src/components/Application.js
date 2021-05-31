@@ -25,7 +25,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     const calendarWrapperRef = useRef(null)
     const editCardWrapperRef = useRef(null)
 
-    const [statusImage, setStatusImage] = useState('edit')
+    const [statusImage, setStatusImage] = useState(application.status)
     const [editing, setEditing] = useState(false)
 
     const [editTitle, setEditTitle] = useState(application.title)
