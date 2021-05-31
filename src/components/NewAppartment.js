@@ -96,9 +96,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
                 <div class="flex flex-row justify-center pt-6 w-full">
                     <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={validateForm}>Create</button>
                 </div>
-
             </div>
-
         </div>
 
     )

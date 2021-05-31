@@ -145,13 +145,12 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
             :
 
-            <div class="row-span-1 col-span-4 pl-2 pr-6">
-                <div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
-                <div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
-                <div class="text-base border-2"><input id="address" class="w-full" value={editAddress} onChange={(e) => {setEditAddress(e.target.value)}}/></div>
-                <div class="text-base border-2"><input id="size" class="w-full" value={editSize} onChange={(e) => {setEditSize(e.target.value)}}/></div>
-                <div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
-
+            <div class="row-span-1 col-span-4 pl-2 pr-6 w-10/12">
+                <div class="text-lg">Title:</div><div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
+                <div class="text-lg">Url:</div><div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
+                <div class="text-lg">Address:</div><div class="text-base border-2"><input id="address" class="w-full" value={editAddress} onChange={(e) => {setEditAddress(e.target.value)}}/></div>
+                <div class="text-lg">Size:</div><div class="text-base border-2"><input id="size" class="w-full" value={editSize} onChange={(e) => {setEditSize(e.target.value)}}/></div>
+                <div class="text-lg">Free date:</div><div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
                 {calendarVisible && calendarDiv}
 
                 <ValidationErrors validationState = {validationState} />

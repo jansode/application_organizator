@@ -182,13 +182,14 @@ const Application = ({application, deleteApplication, updateApplication}) => {
             :
 
             <div class="row-span-1 col-span-4 pl-2 pr-6">
-                <div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
-                <div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
-                <div class="text-base border-2"><input id="location" class="w-full" value={editLocation} onChange={(e) => {setEditLocation(e.target.value)}}/></div>
-                <div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
+                <div class="text-lg">Title:</div><div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
+                <div class="text-lg">Url:</div><div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
+                <div class="text-lg">Location:</div><div class="text-base border-2"><input id="location" class="w-full" value={editLocation} onChange={(e) => {setEditLocation(e.target.value)}}/></div>
+                <div class="text-lg">End date:</div><div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
 
                 {calendarVisible && calendarDiv}
 
+                <div class="text-lg">Cover letter:</div>
                 {(coverLetterVisible || editing) && coverLetterDiv}
 
                 <ValidationErrors validationState = {validationState} />
