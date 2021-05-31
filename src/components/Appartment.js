@@ -122,7 +122,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                 <a href="" onClick={(e) => {e.preventDefault(); deleteAppartment(appartment.id)}}>x</a>
             </div>
             
-            {/* Edit/Sent icon X */}
+            {/* Appartment image */}
             {!editing ? 
             <div class="row-span-1 col-span-1 flex flex-row items-center">
                 <a href="" onClick={(e) => {e.preventDefault()}}><img src={appartmentImage} width="150" height="150"></img></a>
@@ -162,7 +162,6 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             }
         </div>
     )
-
 }
 
 export default Appartment 

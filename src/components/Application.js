@@ -14,7 +14,6 @@ import 'react-quill/dist/quill.snow.css'
 import Delta from 'quill-delta'
 
 import applicationService from '../services/application'
-
 import Constants from '../constants'
 
 import useFormValidator from './useFormValidator'
@@ -41,8 +40,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     const validationFields = [
             {id:'title', type:'string', required:true},
             {id:'url', type:'string', required:true},
-            {id:'address', type:'string', required:true},
-            {id:'size', type:'int', required:true}
+            {id:'location', type:'string', required:true}
     ]
 
     const [validationState, validateForm] = useFormValidator(validationFields)
@@ -66,7 +64,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
             updateListItem()
         }
 
-    }, [editCardWrapperRef, calendarWrapperRef])
+    }, [validationState, editCardWrapperRef, calendarWrapperRef])
 
     const updateSentStatus = async (status) => {
         const data = {'status': status}
@@ -76,28 +74,6 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     }
 
     const updateListItem = async () => {
-
-        let missingFields = false
-        if(editTitle === "")
-        {
-            document.getElementById('title').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(editUrl === "")
-        {
-            document.getElementById('url').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(editLocation === "")
-        {
-            document.getElementById('location').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-
-        if(missingFields)
-        {
-            return
-        }
 
         if(quillRef.current != null)
         {
@@ -214,6 +190,8 @@ const Application = ({application, deleteApplication, updateApplication}) => {
                 {calendarVisible && calendarDiv}
 
                 {(coverLetterVisible || editing) && coverLetterDiv}
+
+                <ValidationErrors validationState = {validationState} />
 
                 <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); validateForm()}}> Save</a>
             </div>

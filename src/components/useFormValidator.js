@@ -37,6 +37,11 @@ const useFormValidator = (validationFields, validationSettings = defaultSettings
         validationFields.forEach((field) => {
             let has_error = false
             const element = document.getElementById(field.id)
+            if(!element)
+            {
+                throw new TypeError('validationFields prop contains a non-existing id','useFormValidator.js')
+            }
+
             if(element.value === '' && field.required)
             {
                 has_error = true
