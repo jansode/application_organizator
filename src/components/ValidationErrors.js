@@ -12,7 +12,7 @@ const ValidationErrors = ({validationState}) => {
     }
 
     return (
-        <div>
+        <div class="w-full">
 
             { !validationState.success && error_messages }
 

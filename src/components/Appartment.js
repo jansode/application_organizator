@@ -15,6 +15,9 @@ import Delta from 'quill-delta'
 import appartmentService from '../services/appartment'
 import Constants from '../constants'
 
+import useFormValidator from './useFormValidator'
+import ValidationErrors from './ValidationErrors'
+
 const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     const quillRef = useRef(null) 
@@ -32,6 +35,15 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     const [calendarVisible, setCalendarVisible] = useState(false)
 
+    const validationFields = [
+            {id:'title', type:'string', required:true},
+            {id:'url', type:'string', required:true},
+            {id:'address', type:'string', required:true},
+            {id:'size', type:'int', required:true}
+    ]
+
+    const [validationState, validateForm] = useFormValidator(validationFields)
+
     useEffect(() => {
         document.onclick = (e) => {
 
@@ -46,7 +58,12 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             }
         }
 
-    }, [editCardWrapperRef, calendarWrapperRef])
+        if(validationState.success)
+        {
+            updateListItem()
+        }
+
+    }, [validationState, editCardWrapperRef, calendarWrapperRef])
 
     const updateSentStatus = async (status) => {
         const data = {'status': status}
@@ -56,33 +73,6 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     }
 
     const updateListItem = async () => {
-
-        let missingFields = false
-        if(editTitle === "")
-        {
-            document.getElementById('title').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(editUrl === "")
-        {
-            document.getElementById('url').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(editAddress === "")
-        {
-            document.getElementById('address').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(editSize === "")
-        {
-            document.getElementById('size').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-
-        if(missingFields)
-        {
-            return
-        }
 
         if(quillRef.current != null)
         {
@@ -148,7 +138,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                 <div class="text-wrap text-lg text-blue-600">{limitDisplayTextSize(appartment.title,Constants.MAX_TITLE_SIZE)}</div>
                 <a href={handleUrlPrefix()}  class=" text-wrap text-base text-blue-400">{limitDisplayTextSize(appartment.url,Constants.MAX_URL_SIZE)}</a>
                 <p class="text-wrap text-base">{appartment.address}</p>
-                <p class="text-wrap text-base">{appartment.size}</p>
+                <p class="text-wrap text-base">{appartment.size}m<sup>2</sup></p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(appartment.free_date)))}</p>
                 <div><a href="" id="edit-button" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
             </div>
@@ -164,7 +154,9 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
                 {calendarVisible && calendarDiv}
 
-                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); updateListItem()}}>Save</a>
+                <ValidationErrors validationState = {validationState} />
+
+                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); validateForm()}}>Save</a>
             </div>
 
             }

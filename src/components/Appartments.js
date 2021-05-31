@@ -42,6 +42,8 @@ const Appartments = ({searchValue, sortBy}) => {
                 })
 
         }
+
+        console.log(filteredList)
         setAppartments(filteredList)
     }
 

@@ -46,43 +46,20 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
             }
         }
 
-        if(validationState.success)
-        {
-            createNew()
+        const validation = async () => {
+            if(validationState.success)
+            {
+                if(quillRef.current != null)
+                {
+                    await quillRef.current.blur()
+                }
+                createNew()
+            }
         }
+
+        validation()
 
     }, [validationState, calendarWrapperRef])
-
-    const createNewButtonHandler = async () => {
-        
-        let missingFields = false
-        if(formTitle === "")
-        {
-            document.getElementById('title').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(formUrl === "")
-        {
-            document.getElementById('url').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-        if(formLocation === "")
-        {
-            document.getElementById('location').style.border = '1px solid #EF4444'
-            missingFields = true
-        }
-
-        if(missingFields)
-        {
-            return
-        }
-
-        if(quillRef.current != null)
-        {
-            await quillRef.current.blur()
-        }
-        setCreateNewFlag(true)
-    }
 
     const createNew = async (e) => {
         await applicationService.createUserApplication({

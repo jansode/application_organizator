@@ -17,6 +17,9 @@ import applicationService from '../services/application'
 
 import Constants from '../constants'
 
+import useFormValidator from './useFormValidator'
+import ValidationErrors from './ValidationErrors'
+
 const Application = ({application, deleteApplication, updateApplication}) => {
 
     const quillRef = useRef(null) 
@@ -35,6 +38,15 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     const [calendarVisible, setCalendarVisible] = useState(false)
     const [coverLetterVisible, setCoverLetterVisible] = useState(false)
 
+    const validationFields = [
+            {id:'title', type:'string', required:true},
+            {id:'url', type:'string', required:true},
+            {id:'address', type:'string', required:true},
+            {id:'size', type:'int', required:true}
+    ]
+
+    const [validationState, validateForm] = useFormValidator(validationFields)
+
     useEffect(() => {
         document.onclick = (e) => {
 
@@ -47,6 +59,11 @@ const Application = ({application, deleteApplication, updateApplication}) => {
             {
                 setEditing(false)
             }
+        }
+
+        if(validationState.success)
+        {
+            updateListItem()
         }
 
     }, [editCardWrapperRef, calendarWrapperRef])
@@ -198,7 +215,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
 
                 {(coverLetterVisible || editing) && coverLetterDiv}
 
-                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); updateListItem()}}>Save</a>
+                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); validateForm()}}> Save</a>
             </div>
 
             }

@@ -50,7 +50,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
 
     const createNew = async (e) => {
 
-        const appartmentSize = parseInt(formSize)
+        const appartmentSize = parseInt(formSize,10)
 
         await appartmentService.createUserAppartment({
             title: formTitle,
