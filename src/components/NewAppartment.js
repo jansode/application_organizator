@@ -57,6 +57,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
             url: formUrl,
             address : formAddress,
             size: appartmentSize,
+            image: '',
             free_date: formDate,
         })
 

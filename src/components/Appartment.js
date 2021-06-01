@@ -27,7 +27,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const calendarWrapperRef = useRef(null)
     const editCardWrapperRef = useRef(null)
 
-    const [statusImage, setStatusImage] = useState('edit')
+    const [appartmentImage, setAppartmentImage] = useState(appartment.image)
     const [editing, setEditing] = useState(false)
 
     const [editTitle, setEditTitle] = useState(appartment.title)
@@ -46,6 +46,8 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     ]
 
     const [validationState, validateForm] = useFormValidator(validationFields)
+
+    console.log(appartmentImage)
 
     useEffect(() => {
 
@@ -77,6 +79,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         }
 
         const updated_appartment = {
+            ...appartment,
             id: appartment.id,
             title: editTitle,
             url: editUrl,
@@ -111,6 +114,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     const chooseImage = () => {
 
+        // TODO Don't create element here. Do it in return. 
         let input = document.createElement('input')
         input.type = 'file'
         input.id = 'file-input'
@@ -128,9 +132,12 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                 }
 
                 let formData = new FormData()
+                formData.append('user', appartment.user)
+                formData.append('appartment', appartment.id)
                 formData.append('imageData', input.files[0])
-                const updated = await appartmentService.uploadAppartmentImage(appartment.id,formData)
-                updateAppartment(updated)
+
+                await appartmentService.uploadAppartmentImage(appartment.id,formData)
+                setAppartmentImage(appartment.user+'-'+appartment.id+'.'+file.type.split('/')[1])
             }
 
             f()
@@ -149,9 +156,13 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             
             {/* Appartment image */}
             {!editing ? 
-            <div onClick={() => { chooseImage() } } class="row-span-1 col-span-1 flex flex-row items-center justify-center" style={{cursor : 'pointer'}}>
-                    <Icon icon={fileImageOutline} width="150" height="150" />
-            </div>
+
+                appartmentImage == '' ?
+                <div onClick={() => { chooseImage() } } class="row-span-1 col-span-1 flex flex-row items-center justify-center" style={{cursor : 'pointer'}}>
+                        <Icon icon={fileImageOutline} width="150" height="150" />
+                </div>
+                :
+                <div onClick={() => { chooseImage() }} style={{cursor : 'pointer'}} class="flex flex-row items-center justify-center"><img src={'http://localhost:3001/'+appartmentImage} width="150" height="150"></img></div>
 
             :
             <div></div>
