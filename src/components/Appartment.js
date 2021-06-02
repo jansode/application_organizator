@@ -168,7 +168,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                         <Icon icon={fileImageOutline} width="150" height="150" />
                 </div>
                 :
-                <div onClick={() => { chooseImage() }} style={{cursor : 'pointer'}} class="flex flex-row items-center justify-center"><img class="shadow-md" src={'http://localhost:3001/'+appartmentImage} width="150" height="150"></img></div>
+                <div onClick={() => { chooseImage() }} style={{cursor : 'pointer'}} class="flex flex-row items-center justify-center"><img class="shadow-md" src={'/'+appartmentImage} width="150" height="150"></img></div>
 
             :
             <div></div>

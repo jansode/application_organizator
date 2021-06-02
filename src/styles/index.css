@@ -53,8 +53,27 @@ body
     margin: 6px 0;
 }
 
+@keyframes fadeIn
+{
+    0%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+.new-list-item
+{
+    animation: fadeIn 1s;
+}
+
 .text-wrap
 {
     word-wrap: break-word;
 }
+
 
