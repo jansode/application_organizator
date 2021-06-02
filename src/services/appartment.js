@@ -105,8 +105,8 @@ const uploadAppartmentImage = async (appartmentId, formData) => {
     const config = {
         headers : { 'Authorization' : `Bearer ${token}` , 'Content-Type' : 'multipart/form-data'}
     }
-
     const response = await axios.post(baseUrl+'/appartments/'+appartmentId+'/upload_image', formData, config)
+
     return response.data
 }
 

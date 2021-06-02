@@ -6,6 +6,10 @@ import 'react-dropdown/style.css'
 
 import '../styles/index.css'
 
+import Icon from '@iconify/react'
+import plusCircleOutlined from '@iconify-icons/ant-design/plus-circle-outlined';
+
+
 const Applications = ({searchValue, sortBy}) => {
 
     const [applications, setApplications] = useState([])
@@ -67,10 +71,8 @@ const Applications = ({searchValue, sortBy}) => {
         <div class="flex flex-col justify-center items-center pt-1">
         { createNewVisible ? 
             <NewApplication setCreateNewVisible={setCreateNewVisible} setApplications={setApplicationsWrapper}/> : 
-            <div class="add-new-plus mt-3 mb-4" onClick={(e) => {e.preventDefault(); setCreateNewVisible(true)}}>
-                <div class="add-new-plus1 mt-3"></div>
-                <div class="add-new-plus2 mt-3"></div>
-            </div>
+
+            <Icon icon={plusCircleOutlined} width='50' height='50' color='#bbbbbb' onClick={(e) => {e.preventDefault(); setCreateNewVisible(true)}}/>
         }
 
         {applications.length !== 0 ? 
@@ -80,7 +82,6 @@ const Applications = ({searchValue, sortBy}) => {
             :
             <div></div>
         }
-        <a class="text-gray-400 pt-10" href="https://www.vecteezy.com/free-vector/envelope-icon">Envelope Icon Vectors by Vecteezy</a>
         </div>
         </div>
     )

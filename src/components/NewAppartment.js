@@ -18,6 +18,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     const [formDate, setFormDate] = useState(new Date(Date.now()))
     const [formAddress, setFormAddress] = useState('')
     const [formSize, setFormSize] = useState('')
+    const [formRooms, setFormRooms] = useState('')
 
     const [calendarVisible, setCalendarVisible] = useState(false)
     const [createNewFlag, setCreateNewFlag] = useState(false)
@@ -51,6 +52,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     const createNew = async (e) => {
 
         const appartmentSize = parseInt(formSize,10)
+        setFormSize(appartmentSize)
 
         await appartmentService.createUserAppartment({
             title: formTitle,
@@ -59,6 +61,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
             size: appartmentSize,
             image: '',
             free_date: formDate,
+            rooms: formRooms
         })
 
         const appartments = await appartmentService.getUserAppartments()
@@ -70,7 +73,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     const calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
     return (
-        <div class="flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2"> 
+        <div class="flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
 
             {/* Delete post */}
             <div class="absolute top-2 right-3 z-10">
@@ -87,6 +90,8 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
                 <div class="text-lg">Address:</div> <input id="address" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border =''; setFormAddress(e.target.value)}}/>
 
                 <div class="text-lg">Size:</div><input id="size" class="border-2 w-full" type="text" onChange={(e) => {e.preventDefault(); setFormSize(e.target.value)}}/>
+
+                <div class="text-lg">Rooms:</div><input id="rooms" class="border-2 w-full" type="text" onChange={(e) => {e.preventDefault(); setFormRooms(e.target.value)}}/>
 
                 <div class="text-lg">Free date:</div><input class="border-2 w-full" id="calendar" type="text" value={Utils.getDateFormat(formDate)} onFocus={() => {setCalendarVisible(true)}} />
 

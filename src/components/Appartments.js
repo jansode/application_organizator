@@ -3,6 +3,9 @@ import appartmentService from '../services/appartment'
 import Appartment from './Appartment'
 import NewAppartment from './NewAppartment'
 
+import Icon from '@iconify/react'
+import plusCircleOutlined from '@iconify-icons/ant-design/plus-circle-outlined';
+
 import 'react-dropdown/style.css'
 import '../styles/index.css'
 
@@ -42,8 +45,6 @@ const Appartments = ({searchValue, sortBy}) => {
                 })
 
         }
-
-        console.log(filteredList)
         setAppartments(filteredList)
     }
 
@@ -70,10 +71,7 @@ const Appartments = ({searchValue, sortBy}) => {
         <div class="flex flex-col justify-center items-center pt-1">
         { createNewVisible ? 
             <NewAppartment setCreateNewVisible={setCreateNewVisible} setAppartments ={setAppartments}/> : 
-            <div class="add-new-plus mt-3 mb-4" onClick={(e) => {e.preventDefault(); setCreateNewVisible(true)}}>
-                <div class="add-new-plus1 mt-3"></div>
-                <div class="add-new-plus2 mt-3"></div>
-            </div>
+            <Icon icon={plusCircleOutlined} width='50' height='50' color='#bbbbbb' onClick={(e) => {e.preventDefault(); setCreateNewVisible(true)}}/>
         }
 
         {appartments.length !== 0 ? 
@@ -83,7 +81,6 @@ const Appartments = ({searchValue, sortBy}) => {
             :
             <div></div>
         }
-        <a class="text-gray-400 pt-10" href="https://www.vecteezy.com/free-vector/envelope-icon">Envelope Icon Vectors by Vecteezy</a>
         </div>
         </div>
     )

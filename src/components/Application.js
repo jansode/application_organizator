@@ -19,6 +19,10 @@ import Constants from '../constants'
 import useFormValidator from './useFormValidator'
 import ValidationErrors from './ValidationErrors'
 
+import { Icon, InlineIcon } from '@iconify/react';
+import envelopeIcon from '@iconify-icons/bi/envelope';
+import envelopeFill from '@iconify-icons/bi/envelope-fill';
+
 const Application = ({application, deleteApplication, updateApplication}) => {
 
     const quillRef = useRef(null) 
@@ -153,7 +157,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
             {/* Edit/Sent icon X */}
             {!editing ? 
             <div class="row-span-1 col-span-1 flex flex-row items-center justify-center">
-                <a href="" onClick={(e) => {e.preventDefault()}}><img src={statusImage === 'edit' ? editImage : sentImage} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}}width="150" height="150"></img></a>
+                <Icon icon={statusImage === 'edit' ? envelopeIcon : envelopeFill} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}} width='80' height='80'/>
             </div>
             :
             <div></div>

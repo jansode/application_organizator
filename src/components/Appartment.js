@@ -37,6 +37,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const [editAddress, setEditAddress] = useState(appartment.address)
     const [editSize, setEditSize] = useState(appartment.size)
     const [editDate, setEditDate] = useState(new Date(Date.parse(appartment.free_date)))
+    const [editRooms, setEditRooms] = useState(appartment.rooms)
 
     const [calendarVisible, setCalendarVisible] = useState(false)
 
@@ -51,8 +52,6 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     ]
 
     const [validationState, validateForm] = useFormValidator(validationFields)
-
-    console.log(appartmentImage)
 
     useEffect(() => {
 
@@ -83,14 +82,17 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             await quillRef.current.blur()
         }
 
+        const sizeInt = parseInt(editSize,10) 
+        setEditSize(sizeInt)
+
         const updated_appartment = {
-            ...appartment,
             id: appartment.id,
             title: editTitle,
             url: editUrl,
             address: editAddress,
             free_date: editDate,
-            size: editSize
+            size: sizeInt,
+            rooms: editRooms
         }
 
         await appartmentService.updateUserAppartment(appartment.id, updated_appartment)
@@ -166,7 +168,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                         <Icon icon={fileImageOutline} width="150" height="150" />
                 </div>
                 :
-                <div onClick={() => { chooseImage() }} style={{cursor : 'pointer'}} class="flex flex-row items-center justify-center"><img src={'http://localhost:3001/'+appartmentImage} width="150" height="150"></img></div>
+                <div onClick={() => { chooseImage() }} style={{cursor : 'pointer'}} class="flex flex-row items-center justify-center"><img class="shadow-md" src={'http://localhost:3001/'+appartmentImage} width="150" height="150"></img></div>
 
             :
             <div></div>
@@ -180,6 +182,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                 <a href={handleUrlPrefix()}  class=" text-wrap text-base text-blue-400">{limitDisplayTextSize(appartment.url,Constants.MAX_URL_SIZE)}</a>
                 <p class="text-wrap text-base">{appartment.address}</p>
                 <p class="text-wrap text-base">{appartment.size}m<sup>2</sup></p>
+                <p class="text-wrap text-base">{appartment.rooms}</p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(appartment.free_date)))}</p>
                 <div><a href="" id="edit-button" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); setEditing(true)}}>Edit</a></div>
             </div>
@@ -191,6 +194,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                 <div class="text-lg">Url:</div><div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
                 <div class="text-lg">Address:</div><div class="text-base border-2"><input id="address" class="w-full" value={editAddress} onChange={(e) => {setEditAddress(e.target.value)}}/></div>
                 <div class="text-lg">Size:</div><div class="text-base border-2"><input id="size" class="w-full" value={editSize} onChange={(e) => {setEditSize(e.target.value)}}/></div>
+                <div class="text-lg">Rooms:</div><div class="text-base border-2"><input id="rooms" class="w-full" value={editRooms} onChange={(e) => {setEditRooms(e.target.value)}}/></div>
                 <div class="text-lg">Free date:</div><div class="text-base border-2"><input class="w-full" id="calendar" value={Utils.getDateFormat(editDate)} onFocus={() => {setCalendarVisible(true)}}/></div>
                 {calendarVisible && calendarDiv}
 

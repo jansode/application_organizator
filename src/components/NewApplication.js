@@ -100,7 +100,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
 
     return (
-        <div class="flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2"> 
+        <div class="flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
 
             {/* Delete post */}
             <div class="absolute top-2 right-3 z-10">
