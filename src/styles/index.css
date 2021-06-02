@@ -66,9 +66,27 @@ body
     }
 }
 
-.new-list-item
+@keyframes fadeOut
+{
+    0%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}
+
+.fade-in
 {
     animation: fadeIn 1s;
+}
+
+.fade-out
+{
+    animation: fadeOut 0.2s;
 }
 
 .text-wrap

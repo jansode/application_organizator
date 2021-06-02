@@ -70,10 +70,20 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
         setCreateNewVisible(false)
     }
 
+    const fadeOut = () => {
+
+        const element = document.getElementById('appartment')
+        element.classList.add('fade-out')
+
+        setTimeout(() => {
+            setCreateNewVisible(false)
+        },100)
+    }
+
     const calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
     return (
-        <div class="new-list-item flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
+        <div class="appartment fade-in flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
 
             {/* Delete post */}
             <div class="absolute top-2 right-3 z-10">

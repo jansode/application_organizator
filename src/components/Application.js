@@ -141,17 +141,24 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     'link' 
     ]
 
+    const fadeOut = () => {
+
+        const element = document.getElementById(application.id)
+        element.classList.add('fade-out')
+        deleteApplication(application.id)
+    }
+
     const calendarDiv = <div ref={calendarWrapperRef} class="md:w-1/2"><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
     const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {setEditCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
 
 
     return (
-        <div ref={editCardWrapperRef} id="list-card-div" class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
+        <div ref={editCardWrapperRef} id={application.id} class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={application.id}> 
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3">
-                <a href="" onClick={(e) => {e.preventDefault(); deleteApplication(application.id)}}>x</a>
+                <a href="" onClick={(e) => {e.preventDefault(); fadeOut()}}>x</a>
             </div>
             
             {/* Edit/Sent icon X */}
