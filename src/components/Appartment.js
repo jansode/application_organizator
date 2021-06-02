@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 
 import Utils from './Utils'
 import Constants from '../constants'
@@ -27,6 +27,8 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const calendarWrapperRef = useRef(null)
     const editCardWrapperRef = useRef(null)
 
+    const imageLoadedRef = useRef(false)
+
     const [appartmentImage, setAppartmentImage] = useState(appartment.image)
     const [editing, setEditing] = useState(false)
 
@@ -37,6 +39,9 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const [editDate, setEditDate] = useState(new Date(Date.parse(appartment.free_date)))
 
     const [calendarVisible, setCalendarVisible] = useState(false)
+
+    const [,updateState] = useState()
+    const forceUpdate = useCallback(() => {updateState({})},[])
 
     const validationFields = [
             {id:'title', type:'string', required:true},
@@ -121,10 +126,9 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         input.click()
         input.onchange = () => {
 
+            const file = input.files[0]
             const f = async () => 
             {
-                const file = input.files[0]
-
                 if(!file.type.match('image.*'))
                 {
                     alert("The uploaded file needs to be an image.")
@@ -137,9 +141,10 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
                 formData.append('imageData', input.files[0])
 
                 await appartmentService.uploadAppartmentImage(appartment.id,formData)
-                setAppartmentImage(appartment.user+'-'+appartment.id+'.'+file.type.split('/')[1])
-            }
 
+                const response = await appartmentService.getUserAppartment(appartment.id)
+                setAppartmentImage(response.image)
+            }
             f()
         }
     }
@@ -156,7 +161,6 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             
             {/* Appartment image */}
             {!editing ? 
-
                 appartmentImage == '' ?
                 <div onClick={() => { chooseImage() } } class="row-span-1 col-span-1 flex flex-row items-center justify-center" style={{cursor : 'pointer'}}>
                         <Icon icon={fileImageOutline} width="150" height="150" />
