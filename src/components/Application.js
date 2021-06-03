@@ -22,6 +22,7 @@ import ValidationErrors from './ValidationErrors'
 import { Icon, InlineIcon } from '@iconify/react';
 import envelopeIcon from '@iconify-icons/bi/envelope';
 import envelopeFill from '@iconify-icons/bi/envelope-fill';
+import closeIcon from '@iconify-icons/clarity/window-close-line';
 
 const Application = ({application, deleteApplication, updateApplication}) => {
 
@@ -142,7 +143,6 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     ]
 
     const fadeOut = () => {
-
         const element = document.getElementById(application.id)
         element.classList.add('fade-out')
         deleteApplication(application.id)
@@ -158,8 +158,8 @@ const Application = ({application, deleteApplication, updateApplication}) => {
         <div ref={editCardWrapperRef} id={application.id} class={`${animate} relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 w-11/12 lg:w-1/2 shadow-md`} key={application.id}> 
 
             {/* Delete post X */}
-            <div class="absolute top-2 right-3">
-                <a href="" onClick={(e) => {e.preventDefault(); fadeOut()}}>x</a>
+            <div class="absolute top-2 right-3 cursor-pointer">
+                <Icon icon={closeIcon} onClick={fadeOut} color='#bbbbbb' height='20px' width='20px'/>
             </div>
             
             {/* Edit/Sent icon X */}

@@ -14,6 +14,9 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import Delta from 'quill-delta'
 
+import { Icon, InlineIcon } from '@iconify/react';
+import closeIcon from '@iconify-icons/clarity/window-close-line';
+
 const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
     const quillRef = useRef(null) 
@@ -124,8 +127,8 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
         <div id="application" class="fade-in flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 w-11/12 lg:w-1/2 shadow-md"> 
 
             {/* Delete post */}
-            <div class="absolute top-2 right-3 z-10">
-                <a href="" onClick={(e) => {e.preventDefault(); fadeOut()}}>x</a>
+            <div class="absolute top-2 right-3 z-10 cursor-pointer">
+                <Icon icon={closeIcon} onClick={fadeOut} color='#bbbbbb' height='20px' width='20px'/>
             </div>
 
             {/* Input area */}

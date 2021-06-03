@@ -21,6 +21,8 @@ import ValidationErrors from './ValidationErrors'
 import { Icon, InlineIcon } from '@iconify/react'
 import fileImageOutline from '@iconify-icons/mdi/file-image-outline'
 
+import closeIcon from '@iconify-icons/clarity/window-close-line';
+
 const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     const quillRef = useRef(null) 
@@ -166,8 +168,8 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         <div ref={editCardWrapperRef} id={appartment.id} class={`${animate} relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 w-11/12 lg:w-1/2 shadow-md`} key={appartment.id}> 
 
             {/* Delete post X */}
-            <div class="absolute top-2 right-3">
-                <a href="" onClick={(e) => {e.preventDefault(); fadeOut() }}>x</a>
+            <div class="absolute top-2 right-3 cursor-pointer">
+                <Icon icon={closeIcon} onClick={fadeOut} color='#bbbbbb' height='20px' width='20px'/>
             </div>
             
             {/* Appartment image */}

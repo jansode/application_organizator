@@ -4,6 +4,9 @@ import Utils from './Utils'
 import Calendar from 'react-calendar'
 import ValidationErrors from './ValidationErrors'
 
+import { Icon, InlineIcon } from '@iconify/react';
+import closeIcon from '@iconify-icons/clarity/window-close-line';
+
 import '../styles/index.css'
 import 'react-calendar/dist/Calendar.css';
 
@@ -71,7 +74,6 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     }
 
     const fadeOut = () => {
-
         const element = document.getElementById('appartment')
         element.classList.add('fade-out')
 
@@ -83,11 +85,11 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     const calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
     return (
-        <div class="appartment fade-in flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
+        <div id="appartment" class="fade-in flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
 
             {/* Delete post */}
-            <div class="absolute top-2 right-3 z-10">
-                <a href="" onClick={(e) => {e.preventDefault(); setCreateNewVisible(false)}}>x</a>
+            <div class="absolute top-2 right-3 z-10 cursor-pointer">
+                <Icon icon={closeIcon} onClick={fadeOut} color='#bbbbbb' height='20px' width='20px'/>
             </div>
 
             {/* Input area */}
