@@ -78,12 +78,17 @@ const Application = ({application, deleteApplication, updateApplication}) => {
         setStatusImage(status)
     }
 
-    const updateListItem = async () => {
+    const saveButtonHandler = async () => {
 
         if(quillRef.current != null)
         {
             await quillRef.current.blur()
         }
+        
+        validateForm()
+    }
+
+    const updateListItem = async () => {
 
         const updated_application = {
             id: application.id,
@@ -142,6 +147,14 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     'link' 
     ]
 
+    const confirmAndDelete = () => {
+
+        if(window.confirm("Are you sure you want to delete the appartment?"))
+        {
+            fadeOut()
+        }
+    }
+
     const fadeOut = () => {
         const element = document.getElementById(application.id)
         element.classList.add('fade-out')
@@ -159,7 +172,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3 cursor-pointer">
-                <Icon icon={closeIcon} onClick={fadeOut} color='#bbbbbb' height='20px' width='20px'/>
+                <Icon icon={closeIcon} onClick={confirmAndDelete} color='#bbbbbb' height='20px' width='20px'/>
             </div>
             
             {/* Edit/Sent icon X */}
@@ -205,7 +218,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
 
                 <ValidationErrors validationState = {validationState} />
 
-                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); validateForm()}}> Save</a>
+                <a href="" class="text-base text-blue-400" onClick={(e) => {e.preventDefault(); saveButtonHandler()}}> Save</a>
             </div>
 
             }

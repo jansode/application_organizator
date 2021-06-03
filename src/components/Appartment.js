@@ -153,6 +153,14 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         }
     }
 
+    const confirmAndDelete = () => {
+
+        if(window.confirm("Are you sure you want to delete the application?"))
+        {
+            fadeOut()
+        }
+    }
+
     const fadeOut = () => {
 
         const element = document.getElementById(appartment.id)
@@ -169,7 +177,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3 cursor-pointer">
-                <Icon icon={closeIcon} onClick={fadeOut} color='#bbbbbb' height='20px' width='20px'/>
+                <Icon icon={closeIcon} onClick={confirmAndDelete} color='#bbbbbb' height='20px' width='20px'/>
             </div>
             
             {/* Appartment image */}
