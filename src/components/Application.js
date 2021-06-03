@@ -155,7 +155,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
     const animate = editing ? 'fade-in' : ''
 
     return (
-        <div ref={editCardWrapperRef} id={application.id} class={`${animate} relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md`} key={application.id}> 
+        <div ref={editCardWrapperRef} id={application.id} class={`${animate} relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 w-11/12 lg:w-1/2 shadow-md`} key={application.id}> 
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3">
