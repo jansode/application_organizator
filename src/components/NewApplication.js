@@ -106,11 +106,22 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
     const calendarDiv = <div ref={calendarWrapperRef}><Calendar value={formDate} onClickDay={(v,e) => {setFormDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
-    const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px'}}/></div>
+
+    const initializeQuillWidth = () => {
+
+        console.log(quillRef.current.props.style)
+        if(quillRef.current && !quillRef.current.props.style.width)
+        {
+            const style = quillRef.current.props.style
+            quillRef.current.props.style = {...style, width : document.getElementById('cover-letter').offsetWidth}
+        }
+    }
+
+    const coverLetterDiv = <div id="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px', width : '100%'}} /></div>
 
 
     return (
-        <div id="application" class="fade-in flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 lg:w-1/2 shadow-md"> 
+        <div id="application" class="fade-in flex flex-col justify-center items-center relative bg-white rounded border-gray-400 m-3 p-10 w-11/12 lg:w-1/2 shadow-md"> 
 
             {/* Delete post */}
             <div class="absolute top-2 right-3 z-10">

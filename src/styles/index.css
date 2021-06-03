@@ -7,9 +7,10 @@ body
     background-color: #eeeeee;
 }
 
-.cover-letter
+#cover-letter
 {
     margin-bottom: 100px;
+    width: 100%;
 }
 
 .add-new-plus 
