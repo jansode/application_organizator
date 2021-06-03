@@ -176,8 +176,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
 
 
             <div class="row-span-1 col-span-2 pl-2">
-                <div class="text-wrap text-lg text-blue-600">{limitDisplayTextSize(application.title,Constants.MAX_TITLE_SIZE)}</div>
-                <a href={handleUrlPrefix()}  class=" text-wrap text-base text-blue-400">{limitDisplayTextSize(application.url,Constants.MAX_URL_SIZE)}</a>
+                <div class="text-wrap text-lg text-blue-600"><a href={handleUrlPrefix()}>{limitDisplayTextSize(application.title,Constants.MAX_TITLE_SIZE)}</a></div>
                 <p class="text-wrap text-base">{application.location}</p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(application.end_date)))}</p>
 
