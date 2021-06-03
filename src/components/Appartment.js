@@ -160,8 +160,10 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     const calendarDiv = <div ref={calendarWrapperRef} class="md:w-1/2"><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
+    const animate = editing ? 'fade-in' : ''
+
     return (
-        <div ref={editCardWrapperRef} id={appartment.id} class="relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md" key={appartment.id}> 
+        <div ref={editCardWrapperRef} id={appartment.id} class={`${animate} relative grid grid-rows-1 grid-cols-4 bg-white rounded border-gray-400 m-3 p-2 lg:w-1/2 shadow-md`} key={appartment.id}> 
 
             {/* Delete post X */}
             <div class="absolute top-2 right-3">
