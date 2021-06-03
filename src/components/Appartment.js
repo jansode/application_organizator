@@ -189,8 +189,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             {!editing ?
 
             <div class="row-span-1 col-span-2 pl-2">
-                <div class="text-wrap text-lg text-blue-600">{limitDisplayTextSize(appartment.title,Constants.MAX_TITLE_SIZE)}</div>
-                <a href={handleUrlPrefix()}  class=" text-wrap text-base text-blue-400">{limitDisplayTextSize(appartment.url,Constants.MAX_URL_SIZE)}</a>
+                <div class="text-wrap text-lg text-blue-600"><a href={handleUrlPrefix()}>{limitDisplayTextSize(appartment.title,Constants.MAX_TITLE_SIZE)}</a></div>
                 <p class="text-wrap text-base">{appartment.address}</p>
                 <p class="text-wrap text-base">{appartment.size}m<sup>2</sup></p>
                 <p class="text-wrap text-base">{appartment.rooms}</p>
