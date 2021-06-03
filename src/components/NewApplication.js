@@ -50,12 +50,9 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
         }
 
         const validation = async () => {
+
             if(validationState.success)
             {
-                if(quillRef.current != null)
-                {
-                    await quillRef.current.blur()
-                }
                 createNew()
             }
         }
@@ -63,6 +60,16 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
         validation()
 
     }, [validationState, calendarWrapperRef])
+
+    const saveButtonHandler = async () => {
+
+        if(quillRef.current != null)
+        {
+            await quillRef.current.blur()
+        }
+
+        validateForm()
+    }
 
     const createNew = async (e) => {
         await applicationService.createUserApplication({
@@ -151,7 +158,7 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
                 <ValidationErrors validationState = {validationState} />
 
                 <div class="flex flex-row justify-center pt-6 w-full">
-                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={validateForm}>Create</button>
+                    <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={saveButtonHandler}>Create</button>
                 </div>
             </div>
         </div>
