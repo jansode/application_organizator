@@ -164,7 +164,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
             {/* Edit/Sent icon X */}
             {!editing ? 
             <div class="row-span-1 col-span-1 flex flex-row items-center justify-center">
-                <Icon icon={statusImage === 'edit' ? envelopeIcon : envelopeFill} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}} width='80' height='80'/>
+                <Icon icon={statusImage === 'edit' ? envelopeIcon : envelopeFill} onClick={() => {updateSentStatus(statusImage === 'edit' ? 'sent' : 'edit')}} width='80' height='80' color='#bbbbbb'/>
             </div>
             :
             <div></div>
