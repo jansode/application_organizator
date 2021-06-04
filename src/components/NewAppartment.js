@@ -31,7 +31,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     const validationFields = [
             {id:'title', type:'string', required:true},
             {id:'url', type:'string', required:true},
-            {id:'price', type:'int', required:true},
+            {id:'price', type:'float', required:true},
             {id:'address', type:'string', required:true},
             {id:'size', type:'int', required:true}
     ]

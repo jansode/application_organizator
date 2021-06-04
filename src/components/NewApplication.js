@@ -168,7 +168,9 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
 
                 {coverLetterVisible && coverLetterDiv}
 
-                <ValidationErrors validationState = {validationState} />
+                <div class="flex justify-center items-center w-full">
+                    <ValidationErrors validationState = {validationState} />
+                </div>
 
                 <div class="flex flex-row justify-center pt-6 w-full">
                     <button class="bg-blue-600 text-base text-white p-2 rounded w-40" onClick={saveButtonHandler}>Create</button>

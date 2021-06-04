@@ -26,8 +26,7 @@ const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisibl
 
     const dropdownOptions = [
         "Title",
-        "Url",
-        "Location"
+        "Location",
     ]
 
     const defaultOption = dropdownOptions[0]

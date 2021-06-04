@@ -12,7 +12,7 @@ const ValidationErrors = ({validationState}) => {
     }
 
     return (
-        <div class="w-full">
+        <div class="flex flex-col justify-center item-center w-full">
 
             { !validationState.success && error_messages }
 
