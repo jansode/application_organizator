@@ -127,7 +127,20 @@ const NewApplication = ({setCreateNewVisible, setApplications}) => {
         }
     }
 
-    const coverLetterDiv = <div id="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {setFormCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px', width : '100%'}} /></div>
+    const updateCoverLetterText = (editor) => {
+
+        // Here we need to force the delta to be 
+        // empty because of a trailing newline that is added.
+        if(editor.getText().trim() == '')
+        {
+            setFormCoverLetter(new Delta())
+            return
+        }
+
+        setFormCoverLetter(editor.getContents())
+    }
+
+    const coverLetterDiv = <div id="cover-letter"> <ReactQuill ref={quillRef} value={formCoverLetter} onBlur={(previousRange, source, editor) => {updateCoverLetterText(editor)}} modules={modules} formats={formats} style={{height : '500px', width : '100%'}} /></div>
 
 
     return (

@@ -161,9 +161,22 @@ const Application = ({application, deleteApplication, updateApplication}) => {
         deleteApplication(application.id)
     }
 
+    const updateCoverLetterText = (editor) => {
+
+        // Here we need to force the editor to be 
+        // empty because of a trailing newline that is added.
+        if(editor.getText().trim() == '')
+        {
+            setEditCoverLetter(new Delta())  
+            return
+        }
+
+        setEditCoverLetter(editor.getContents())
+    }
+
     const calendarDiv = <div ref={calendarWrapperRef} class="md:w-1/2"><Calendar value={editDate} onClickDay={(v,e) => {setEditDate(new Date(Date.parse(v))); setCalendarVisible(false)}} /></div>
 
-    const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {setEditCoverLetter(editor.getContents())}} modules={modules} formats={formats} style={{height : '500px', marginBottom: '100px'}}/></div>
+    const coverLetterDiv = <div class="cover-letter"> <ReactQuill ref={quillRef} value={editCoverLetter} onBlur={(previousRange, source, editor) => {updateCoverLetterText(editor)}} modules={modules} formats={formats} style={{height : '500px', marginBottom: '100px'}}/></div>
 
     const animate = editing ? 'fade-in' : ''
 
