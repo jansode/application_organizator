@@ -163,7 +163,7 @@ const Application = ({application, deleteApplication, updateApplication}) => {
 
     const updateCoverLetterText = (editor) => {
 
-        // Here we need to force the editor to be 
+        // Here we need to force the delta to be 
         // empty because of a trailing newline that is added.
         if(editor.getText().trim() == '')
         {

@@ -184,7 +184,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             {!editing ? 
                 appartmentImage == '' ?
                 <div onClick={() => { chooseImage() } } class="row-span-1 col-span-1 flex flex-row items-center justify-center" style={{cursor : 'pointer'}}>
-                        <Icon icon={fileImageOutline} width="150" height="150" />
+                        <Icon icon={fileImageOutline} width="150" height="150" color='#bbbbbb'/>
                 </div>
                 :
                 <div onClick={() => { chooseImage() }} style={{cursor : 'pointer'}} class="flex flex-row items-center justify-center"><img class="shadow-md" src={'/'+appartmentImage} width="150" height="150"></img></div>
