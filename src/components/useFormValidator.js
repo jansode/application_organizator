@@ -59,6 +59,16 @@ const useFormValidator = (validationFields, validationSettings = defaultSettings
                         error_messages = [...error_messages, `${Utils.capitalizeFirst(field.id)} field must be an integer value.`]
                     }
                 }
+                else if(field.type === 'float')
+                {
+                    const value = parseFloat(element.value)
+
+                    if(Number.isNaN(value))
+                    {
+                        has_error = true
+                        error_messages = [...error_messages, `${Utils.capitalizeFirst(field.id)} field must be a float value.`]
+                    }
+                }
             }
 
             if(has_error)
