@@ -36,6 +36,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
 
     const [editTitle, setEditTitle] = useState(appartment.title)
     const [editUrl, setEditUrl] = useState(appartment.url)
+    const [editPrice, setEditPrice] = useState(appartment.price)
     const [editAddress, setEditAddress] = useState(appartment.address)
     const [editSize, setEditSize] = useState(appartment.size)
     const [editDate, setEditDate] = useState(new Date(Date.parse(appartment.free_date)))
@@ -49,6 +50,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
     const validationFields = [
             {id:'title', type:'string', required:true},
             {id:'url', type:'string', required:true},
+            {id:'price', type:'float', required:true},
             {id:'address', type:'string', required:true},
             {id:'size', type:'int', required:true}
     ]
@@ -91,6 +93,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             id: appartment.id,
             title: editTitle,
             url: editUrl,
+            price: editPrice,
             address: editAddress,
             free_date: editDate,
             size: sizeInt,
@@ -161,6 +164,16 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
         }
     }
 
+    // TODO: This shouldn't be called on every onChange.
+    const setPrice = (priceStr) => {
+        const priceFloat = parseFloat(priceStr) 
+
+        if(priceFloat !== NaN)
+        {
+            setEditPrice(priceFloat)
+        }
+    }
+
     const fadeOut = () => {
 
         const element = document.getElementById(appartment.id)
@@ -199,6 +212,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             <div class="row-span-1 col-span-2 pl-2">
                 <div class="text-wrap text-lg text-blue-600"><a href={handleUrlPrefix()}>{limitDisplayTextSize(appartment.title,Constants.MAX_TITLE_SIZE)}</a></div>
                 <p class="text-wrap text-base">{appartment.address}</p>
+                <p class="text-wrap text-base">{appartment.price}</p>
                 <p class="text-wrap text-base">{appartment.size}m<sup>2</sup></p>
                 <p class="text-wrap text-base">{appartment.rooms}</p>
                 <p class="text-base">{Utils.getDateFormat(new Date(Date.parse(appartment.free_date)))}</p>
@@ -210,6 +224,7 @@ const Appartment = ({appartment, deleteAppartment, updateAppartment}) => {
             <div class="row-span-1 col-span-4 pl-2 pr-6 w-10/12">
                 <div class="text-lg">Title:</div><div class="text-lg text-blue-600 border-2"><input id="title" class="w-full" value={editTitle}  onChange={(e) => {setEditTitle(e.target.value)}}/></div>
                 <div class="text-lg">Url:</div><div class="text-base text-blue-400 border-2"><input id="url" class="w-full" value={editUrl}  onChange={(e) => {setEditUrl(e.target.value)}}/></div>
+                <div class="text-lg">Price:</div><div class="text-base text-blue-400 border-2"><input id="price" class="w-full" value={editPrice}  onChange={(e) => {setPrice(e.target.value)}}/></div>
                 <div class="text-lg">Address:</div><div class="text-base border-2"><input id="address" class="w-full" value={editAddress} onChange={(e) => {setEditAddress(e.target.value)}}/></div>
                 <div class="text-lg">Size:</div><div class="text-base border-2"><input id="size" class="w-full" value={editSize} onChange={(e) => {setEditSize(e.target.value)}}/></div>
                 <div class="text-lg">Rooms:</div><div class="text-base border-2"><input id="rooms" class="w-full" value={editRooms} onChange={(e) => {setEditRooms(e.target.value)}}/></div>

@@ -18,6 +18,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
 
     const [formTitle, setFormTitle] = useState('')
     const [formUrl, setFormUrl] = useState('')
+    const [formPrice, setFormPrice] = useState('')
     const [formDate, setFormDate] = useState(new Date(Date.now()))
     const [formAddress, setFormAddress] = useState('')
     const [formSize, setFormSize] = useState('')
@@ -30,6 +31,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
     const validationFields = [
             {id:'title', type:'string', required:true},
             {id:'url', type:'string', required:true},
+            {id:'price', type:'int', required:true},
             {id:'address', type:'string', required:true},
             {id:'size', type:'int', required:true}
     ]
@@ -60,6 +62,7 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
         await appartmentService.createUserAppartment({
             title: formTitle,
             url: formUrl,
+            price: formPrice,
             address : formAddress,
             size: appartmentSize,
             image: '',
@@ -71,6 +74,15 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
         setAppartments(appartments)
 
         setCreateNewVisible(false)
+    }
+
+    const setPrice = (priceStr) => {
+        const priceFloat = parseFloat(priceStr)
+
+        if(priceFloat !== NaN)
+        {
+            setFormPrice(priceFloat)
+        }
     }
 
     const fadeOut = () => {
@@ -98,6 +110,8 @@ const NewAppartment = ({setCreateNewVisible, setAppartments}) => {
                 <div class="text-lg">Title:</div> <input id="title" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border = ''; setFormTitle(e.target.value)}}/>
 
                 <div class="text-lg">Url:</div> <input id="url" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border = ''; setFormUrl(e.target.value)}}/>
+
+                <div class="text-lg">Price:</div> <input id="price" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border = ''; setPrice(e.target.value)}}/>
 
                 <div class="text-lg">Address:</div> <input id="address" class="border-2 w-full" type="text" onChange={(e) => {e.target.style.border =''; setFormAddress(e.target.value)}}/>
 
