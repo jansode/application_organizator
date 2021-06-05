@@ -5,7 +5,7 @@ import SideMenu from './SideMenu'
 
 import '../styles/index.css'
 
-const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisible}) => {
+const TopBar = ({loggedIn, setSearchValue, setSortBy, sortByValues, logout, setCreateNewVisible}) => {
 
     const [menuOpen, setMenuOpen] = useState(false)
     const [username, setUsername] = useState('')
@@ -24,12 +24,7 @@ const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisibl
 
     }, [loggedIn])
 
-    const dropdownOptions = [
-        "Title",
-        "Location",
-    ]
-
-    const defaultOption = dropdownOptions[0]
+    const defaultOption = sortByValues[0]
 
     if(loggedIn)
     {
@@ -44,7 +39,7 @@ const TopBar = ({loggedIn, setSearchValue, setSortBy, logout, setCreateNewVisibl
 
                 <div class="flex flex-row justify-between lg:w-1/2 w-full items-center">
                     <input class="border-2 focus:border-2 focus:border-blue-200 text-gray-500 w-full h-11" type="text" onChange={(e) =>{setSearchValue(e.target.value)}}/>
-                    <Dropdown options={dropdownOptions} onChange={(option) => {setSortBy(option.label.toLowerCase())}} value={defaultOption}/>
+                    <Dropdown options={sortByValues} onChange={(option) => {setSortBy(option.label.toLowerCase())}} value={defaultOption}/>
                 </div>
             </div>
         )

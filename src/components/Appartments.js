@@ -9,12 +9,15 @@ import plusCircleOutlined from '@iconify-icons/ant-design/plus-circle-outlined';
 import 'react-dropdown/style.css'
 import '../styles/index.css'
 
-const Appartments = ({searchValue, sortBy}) => {
+const Appartments = ({searchValue, sortBy, setSortByValues}) => {
 
     const [appartments, setAppartments] = useState([])
     const [createNewVisible, setCreateNewVisible] = useState(false)
-    
+
+
     useEffect(() => {
+    
+        setSortByValues(['Title','Address'])
 
         const f = async () => {
             const apps = await appartmentService.getUserAppartments()

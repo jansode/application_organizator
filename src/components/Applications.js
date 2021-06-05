@@ -10,12 +10,15 @@ import Icon from '@iconify/react'
 import plusCircleOutlined from '@iconify-icons/ant-design/plus-circle-outlined';
 
 
-const Applications = ({searchValue, sortBy}) => {
+const Applications = ({searchValue, sortBy, setSortByValues}) => {
 
     const [applications, setApplications] = useState([])
     const [createNewVisible, setCreateNewVisible] = useState(false)
     
     useEffect(() => {
+
+        setSortByValues(['Title', 'Location'])
+
         const f = async () => {
             const apps = await applicationService.getUserApplications()
             setApplicationsWrapper(apps)

@@ -18,6 +18,7 @@ const App = () => {
 
     const [searchValue, setSearchValue] = useState('')
     const [sortBy, setSortBy] = useState('title')
+    const [sortByValues, setSortByValues] = useState([])
 
     const [createNewVisible, setCreateNewVisible] = useState('')
 
@@ -35,7 +36,7 @@ const App = () => {
     return (
         <div>
             <Router>
-                <TopBar loggedIn={checkLogin()} setSearchValue={setSearchValue} setSortBy={setSortBy} logout={logout} setCreateNewVisible={setCreateNewVisible}/>
+                <TopBar loggedIn={checkLogin()} setSearchValue={setSearchValue} setSortBy={setSortBy} logout={logout} setCreateNewVisible={setCreateNewVisible} sortByValues={sortByValues}/>
                 <Switch>
                     <Route exact path="/">
                         <Login />
@@ -44,10 +45,10 @@ const App = () => {
                         <SignUp />
                     </Route>
                     <AuthRoute exact path="/applications">
-                        <Applications searchValue={searchValue} sortBy={sortBy} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible} />
+                        <Applications searchValue={searchValue} sortBy={sortBy} setSortByValues={setSortByValues} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible} />
                     </AuthRoute>
                     <AuthRoute exact path="/appartments">
-                        <Appartments searchValue={searchValue} sortBy={sortBy} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible} />
+                        <Appartments searchValue={searchValue} sortBy={sortBy} setCreateNewVisible={setCreateNewVisible} createNewVisible={createNewVisible} setSortByValues={setSortByValues} />
                     </AuthRoute>
                 </Switch>
             </Router>
